@@ -1,0 +1,161 @@
+Base URL: https://karnatakaecotourism.com/api/mobile/
+
+1]
+Sign-up/register
+Method: POST
+API: member_accountsCreate
+Input: adm_name, adm_mobile, adm_email, adm_secret(password)
+OutPut: true/false
+
+2]
+Login/Sign-in
+Method: POST
+API: token
+Input: email(emailid or mobile number 10 dogit), pass
+OutPut: token, uuid, expires
+
+3]
+Check Token expiry
+Method: GET
+API: secure
+OutPut: true/false
+
+4]
+User Info
+Method: GET
+API: userStats/uuid
+OutPut: adm_photo(path), adm_role, log_userId, adm_name
+
+5]
+User Details
+Method: GET
+API: member_accountsSelectOne/uuid
+OutPut: adm_id, adm_name, adm_mobile, adm_email, adm_status, adm_country, adm_createdBy, adm_secret, adm_createdAt, adm_updatedAt
+
+6]
+Logout User
+Method: GET
+API: logoutuser/uuid
+OutPut: true/false
+
+============================================
+
+7]
+Landscape List
+Method: GET
+API: eco_landscapeSelectAll/skp/lmt
+OutPut: lnd_id, lnd_landscape, lnd_location, lnd_treks, lnd_description, lnd_image
+
+8]
+Landscape Search
+Method: GET
+API: eco_landscapeSearch/SearchKey/skp/lmt
+OutPut: lnd_id, lnd_landscape, lnd_location, lnd_treks, lnd_description, lnd_image
+
+9]
+Landscape Details
+Method: GET
+API: eco_landscapeSelectOne/lnd_id
+OutPut: lnd_id, lnd_landscape, lnd_location, lnd_treks, lnd_description, lnd_image
+
+=================================
+
+10]
+Treks List
+Method: GET
+API: landscape_trekSelectAll/skp/lmt/lnd_id
+OutPut: trk_id, trk_landscapeid, trk_name, trk_location, trk_opendate, trk_closeddate, trk_image, trk_description, images1, images2, images3, images4
+
+11]
+Treks Details
+Method: GET
+API: landscape_trekSelectOne/trk_id
+OutPut: trk_id, trk_landscapeid, trk_name, trk_location, trk_opendate, trk_closeddate, trk_image, trk_description, images1, images2, images3, images4, mapcords, trk_description_plain
+['lndscp']=>lnd_id, lnd_landscape, lnd_location, lnd_treks, lnd_description, lnd_image
+['info']=>inf_id, inf_trekid, inf_length, inf_duration, inf_difficulty, inf_startingpoint, inf_endpoint, inf_childallow, inf_description
+['slot']=>trk_id, trk_landscapeid, trk_name, trk_location, trk_opendate, trk_closeddate, trk_image, trk_description, images1, images2, images3, images4
+['overview']=>ovr_id, ovr_trekid, ovr_description, ovr_image, ovr_status
+['tarrif']=>[trf_id, trf_trekid, trf_wday, trf_adult, trf_child, trf_student, trf_status] X 7 days
+['tarrifall']=>trf_id, trf_trekid, trf_wday, trf_adult, trf_child, trf_student, trf_status
+
+12]
+Treks Slot on give Date
+Method: GET
+API: landscape_trekSelectTreks/trk_id/dd-mm-yyyy
+OutPut: slt_id, slt_trekid, slt_trekdate, slt_shift, slt_tslots, slt_bslots, slt_aslots, slt_gdeid, slt_status, images1, images2, images3, images4
+
+====================================
+
+13]
+initiate booking
+Method: POST
+API: trek_bookingsInitiate
+INPUT: userid, trekid, slotid
+OUTPUT: BOOKINGID/false
+
+14]
+Execute Booking
+Method: GET
+API: trek_executeSlots/trkid/sltid/bkgid
+OUTPUT: true/false
+
+15]
+Booking Details
+Method: GET
+API: trek_bookingsSelectOne/bookingId
+OUTPUT: trb_id, trb_userid, trb_fullname, trb_email, trb_mobile, trb_bookdate, trb_visitdate, trb_country, trb_visitors, trb_trekid, trb_treklocation, trb_trekname, trb_startpoint, trb_slot, trb_status, trb_createdAt, trb_updatedAt
+
+16]
+Booking Info
+Method: GET
+API: getbookinginfo/trekid/sltid/bkgid
+OUTPUT: adults, child, student, count
+['booking']=>trb_id, trb_userid, trb_fullname, trb_email, trb_mobile, trb_bookdate, trb_visitdate, trb_country, trb_visitors, trb_trekid, trb_treklocation, trb_trekname, trb_startpoint, trb_slot, trb_status, trb_createdAt, trb_updatedAt
+['trekSlot']=>slt_id, slt_trekid, slt_trekdate, slt_shift, slt_tslots, slt_bslots, slt_aslots, slt_gdeid, slt_status
+['trekData']=>trk_id, trk_landscapeid, trk_name, trk_location, trk_opendate, trk_closeddate, trk_shift600, trk_shift630, trk_shift700, trk_shift730, trk_shift800, trk_shift830, trk_shift900, trk_image, trk_description, trk_status
+['info']=>inf_id, inf_trekid, inf_length, inf_duration, inf_difficulty, inf_startingpoint, inf_endpoint, inf_childallow, inf_description
+
+17]
+Delete Booking
+Method: GET
+API: trek_bookingsDelete/bkgid
+OUTPUT: true/false
+
+============================================
+
+18]
+get RazorPay Pre Order ID
+Method: POST
+API: getrezororderid
+INPUT: amount
+OUTPUT: razorpay(json)
+
+=============================================
+
+19]
+Volunteer Registration
+Method: POST
+API: eco_volunteerCreate
+INPUT: vol_id, vol_name, vol_guardian, vol_bloodgroup, vol_dob, vol_gender, vol_education, vol_profession, vol_email, vol_mobile, vol_address, vol_whatsapp, vol_facebook, vol_twitter, vol_telegram, vol_emrmobile, vol_emrname, vol_emraddress, vol_IT, vol_wlconser, vol_webdes, vol_storytell, vol_Motspeaker, vol_media, vol_expert, vol_expertise, vol_tigeresti, vol_elephantest, vol_herbivoresesti, vol_birdsurvey, vol_cleancamp, vol_fireaware, vol_afforest, vol_crowdcontrol, vol_animalconflict, vol_computation, vol_interest, vol_expect, vol_availabile, vol_willing, vol_whyrenew, vol_agree, vol_image
+OUTPUT: volunteerID/false
+
+================================================
+
+20]
+Events List
+Method: GET
+API: site_eventSelectAll/skp/lmt
+OUTPUT: evt_id, evt_title, evt_image, evt_Brief, evt_description, evt_startdate
+
+22]
+Events Detail
+Method: GET
+API: site_eventSelectOne/evt_id
+OUTPUT: evt_id, evt_title, evt_image, evt_Brief, evt_description, evt_startdate, evt_enddate, evt_lstdate, evt_tslots, evt_bslots, evt_aslots, evt_adult, evt_child, evt_student, evt_status
+
+23]
+Book event
+Method: POST
+API: eco_volunteerCreate
+INPUT: vol_id, vol_name, vol_guardian, vol_bloodgroup, vol_dob, vol_gender, vol_education, vol_profession, vol_email, vol_mobile, vol_address, vol_whatsapp, vol_facebook, vol_twitter, vol_telegram, vol_emrmobile, vol_emrname, vol_emraddress, vol_IT, vol_wlconser, vol_webdes, vol_storytell, vol_Motspeaker, vol_media, vol_expert, vol_expertise, vol_tigeresti, vol_elephantest, vol_herbivoresesti, vol_birdsurvey, vol_cleancamp, vol_fireaware, vol_afforest, vol_crowdcontrol, vol_animalconflict, vol_computation, vol_interest, vol_expect, vol_availabile, vol_willing, vol_whyrenew, vol_agree, vol_image
+OUTPUT: volunteerID/false

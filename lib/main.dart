@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myecotrip/authentication/data/bloc/login_bloc.dart';
+import 'package:myecotrip/authentication/data/bloc/signup_bloc.dart';
+import 'package:myecotrip/authentication/screens/auth_background.dart';
 import 'package:myecotrip/authentication/screens/login_screen.dart';
 import 'package:myecotrip/constants/app_fonts.dart';
 import 'package:myecotrip/constants/app_styles.dart';
@@ -8,13 +11,24 @@ import 'package:myecotrip/utils/shared_pref.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await sharedPref.init();
-  runApp(const MyApp());
+  runApp(const AppWrapperProvider());
 }
 
 AppStyles appStyles = AppStyles();
 AppFonts appFonts = AppFonts();
-Config config = Config();
+
 SharedPref sharedPref = SharedPref();
+
+class AppWrapperProvider extends StatelessWidget {
+  const AppWrapperProvider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LoginProvider(
+      child: SignUpProvider(child: MyApp()),
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -23,11 +37,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ecotourism',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: const AuthenticationScreen(),
     );
   }
 }
