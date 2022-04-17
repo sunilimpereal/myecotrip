@@ -1,16 +1,18 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:myecotrip/admin/screens/dashboard.dart';
+import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
 import 'package:myecotrip/authentication/data/bloc/login_bloc.dart';
 import 'package:myecotrip/authentication/data/repository/authrepository.dart';
 import 'package:myecotrip/authentication/screens/widgets/ECStreamButton.dart';
 import 'package:myecotrip/authentication/screens/widgets/EC_textfield.dart';
 import 'package:myecotrip/constants/config.dart';
 
+import '../../main/navpage/main_page.dart';
+
 class LoginScreen extends StatefulWidget {
   Function clickSignUp;
-   LoginScreen({Key? key,required this.clickSignUp}) : super(key: key);
+  LoginScreen({Key? key, required this.clickSignUp}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -38,9 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  bool checkedValue = false;
   @override
   Widget build(BuildContext context) {
     LoginBloc? loginBloc = LoginProvider.of(context);
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -132,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const AdminDashboard(),
+                                            builder: (context) =>
+                                                checkedValue ? AdminDashboard() : MainPage(),
                                           ),
                                         );
                                       }
@@ -166,6 +171,33 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextStyle(fontWeight: FontWeight.bold, color: Colors.green[700]),
                             ),
                           ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Admin",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Container(
+                            width: 30,
+                            child: Checkbox(
+                              activeColor: Colors.green,
+                              focusColor: Colors.white,
+                              hoverColor: Colors.white,
+                              value: checkedValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValue = newValue ?? false;
+                                  log("sad00");
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 50,
+                          )
                         ],
                       )
                     ],

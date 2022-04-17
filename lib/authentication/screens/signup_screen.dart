@@ -7,7 +7,6 @@ import 'package:myecotrip/authentication/data/bloc/signup_bloc.dart';
 import 'package:myecotrip/authentication/screens/widgets/ECStreamButton.dart';
 import 'package:myecotrip/authentication/screens/widgets/EC_textfield.dart';
 
-import '../../admin/screens/dashboard.dart';
 import '../../constants/config.dart';
 import '../data/repository/authrepository.dart';
 

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, prefer_adjacent_string_concatenation
+
 import 'package:flutter/cupertino.dart';
 import 'package:myecotrip/utils/shared_pref.dart';
 
@@ -6,6 +8,7 @@ String API_ROOTV1 = '' + 'api/v1/';
 String ICON_ROOT = 'https://zts.afroaves.com/icons/';
 String IMAGES = 'assets/images/';
 String ICONS = 'assets/icons/';
+String LOTTIE = 'assets/lottie/';
 
 class Config {
   

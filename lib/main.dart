@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myecotrip/admin/ticket_scan/screen/process_scan.dart';
+import 'package:myecotrip/admin/ticket_scan/screen/scan_screen.dart';
 import 'package:myecotrip/authentication/data/bloc/login_bloc.dart';
 import 'package:myecotrip/authentication/data/bloc/signup_bloc.dart';
 import 'package:myecotrip/authentication/screens/auth_background.dart';
@@ -6,6 +8,7 @@ import 'package:myecotrip/authentication/screens/login_screen.dart';
 import 'package:myecotrip/constants/app_fonts.dart';
 import 'package:myecotrip/constants/app_styles.dart';
 import 'package:myecotrip/constants/config.dart';
+import 'package:myecotrip/main/navpage/main_page.dart';
 import 'package:myecotrip/utils/shared_pref.dart';
 
 void main() async {
