@@ -32,7 +32,8 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
     return Material(
       borderRadius: BorderRadius.circular(100),
       color: Colors.blue.shade100,
-      elevation: 10,
+      elevation: 6,
+      shadowColor: Colors.grey[100],
       child: Container(
         width: 48,
         height: 48,
@@ -56,7 +57,7 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
           children: [
             Text(
               "Dinesh Sam",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
             ),
             SizedBox(
               height: 4,
@@ -111,7 +112,7 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
         children: [
           Text(
             "28",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           Text(
             "age",

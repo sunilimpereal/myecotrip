@@ -53,6 +53,59 @@ class _CustomBackButtonState extends State<CustomBackButton> {
     );
   }
 }
+class CustomIconButton extends StatefulWidget {
+  final  Function onTap;
+  IconData iconData;
+
+  CustomIconButton({Key? key, required this.onTap,required this.iconData}) : super(key: key);
+
+  @override
+  State<CustomIconButton> createState() => _CustomIconButtonState();
+}
+
+class _CustomIconButtonState extends State<CustomIconButton> {
+  @override
+  void initState() {
+    if (widget.onTap == null) {
+      Navigator.pop(context);
+    }
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Material(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          clipBehavior: Clip.hardEdge,
+          color: Colors.green.withOpacity(0.2),
+          child: Center(
+            child: Ink(
+              width: 32.0,
+              height: 32.0,
+              child: InkWell(
+                splashColor: Colors.green,
+                onTap: () {
+                 widget.onTap();
+                },
+                child: Center(
+                  child: Icon(
+                    widget.iconData,
+                    color: Colors.green.shade800,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 // Container(
 //             height: 32,

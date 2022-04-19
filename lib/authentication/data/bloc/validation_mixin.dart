@@ -21,7 +21,7 @@ class ValidationMixin {
   final validatorPassword =
       StreamTransformer<String, String>.fromHandlers(handleData: (password, sink1) {
     if (password.isEmpty) {
-      sink1.addError('Please Enter Valid password');
+      // sink1.addError('Please Enter Valid password');
     } else {
       sink1.add(password);
     }

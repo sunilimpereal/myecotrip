@@ -24,7 +24,7 @@ class AdButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12), // <-- Radius
               ),
-              elevation: 8,
+              elevation: 4,
               primary: color),
           onPressed: () {
             onPressed();
@@ -36,10 +36,10 @@ class AdButton extends StatelessWidget {
               children: [
                 Text(
                   text,
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
                 ),
                 const SizedBox(
-                  width: 16,
+                  width: 8,
                 ),
                 Material(
                     elevation: 2,
