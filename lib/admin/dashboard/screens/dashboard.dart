@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
+import 'package:myecotrip/admin/dashboard/screens/widgets/dashboard_card.dart';
 import 'package:myecotrip/admin/issue_ticket/screens/select_landscape.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
 import 'package:myecotrip/admin/ticket_scan/screen/scan_screen.dart';
 import 'package:myecotrip/constants/config.dart';
+import 'package:myecotrip/main/Trekking_Details_page/Widgets/app_bar.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Widgets/back_button.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -17,21 +19,38 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SafeArea(
         child: Stack(
           children: [
             //body
-            Container(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
               children: [
-                Container(
-                  height: Config().deviceHeight(context) * 0.4,
-                  child: Text("dashbaord card"),
+                CustomAppBar(
+                  leading: CustomIconButton(
+                    onTap: () {},
+                    iconData: Icons.sort_rounded,
+                  ),
+                  title: const Text(
+                    "Dashboard",
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                  ),
+                  end: Container(
+                      child: CustomIconButton(
+                    onTap: () {},
+                    iconData: Icons.search_rounded,
+                  )),
                 ),
-                Reportcard()
+                Container(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TrekDetailCard(),
+                    Reportcard(),
+                  ],
+                )),
               ],
-            )),
+            ),
+
             // bottom buttons
             Positioned(
               bottom: 0,
