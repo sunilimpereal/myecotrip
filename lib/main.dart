@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
 import 'package:myecotrip/admin/ticket_scan/screen/process_scan.dart';
@@ -17,6 +18,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await sharedPref.init();
   runApp(const AppWrapperProvider());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
 }
 
 AppStyles appStyles = AppStyles();
@@ -36,6 +41,7 @@ class AppWrapperProvider extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
+  
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
@@ -48,7 +54,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const AuthenticationScreen(),
-       home: const AdminDashboard(),
+      home: const AdminDashboard(),
     );
   }
 }

@@ -20,7 +20,7 @@ class Custom_AppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(vertical: 4,horizontal: 8),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, 
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

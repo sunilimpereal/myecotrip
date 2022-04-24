@@ -10,6 +10,12 @@ String IMAGES = 'assets/images/';
 String ICONS = 'assets/icons/';
 String LOTTIE = 'assets/lottie/';
 
+
+
+String Roboto = 'Roboto-Medium';
+String Montserrat = 'Montserrat-VariableFont_wght';
+String Nunito = 'Nunito-VariableFont_wght';
+
 class Config {
   
 

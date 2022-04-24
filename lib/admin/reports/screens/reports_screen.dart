@@ -8,6 +8,7 @@ import '../../../constants/config.dart';
 import '../../../main/Trekking_Details_page/Widgets/app_bar.dart';
 import '../../../main/Trekking_Details_page/Widgets/back_button.dart';
 import '../../ticket_scan/screen/widgets/ticket_person_card.dart';
+import '../widgets/reportCard.dart';
 import '../widgets/report_person_card.dart';
 import 'report_slide.dart';
 
@@ -63,55 +64,67 @@ class ReportsState extends State<Reports> {
           },
           i: i),
       header: headerui(context),
-      body: ColorfulSafeArea(
-        color: Colors.white,
-        child: Scaffold(
-          backgroundColor: Colors.white.withOpacity(0.95),
-          body: Stack(children: [
-            Column(
-              children: [
-                CustomAppBar(
-                  leading: CustomBackButton(
-                    onTap: () {},
+      body: Scaffold(
+        backgroundColor: Colors.white,
+        body: Container(
+          color: Color(0xfff8d9a4).withOpacity(0.1),
+          child: SafeArea(
+            child: Stack(children: [
+              Column(
+                children: [
+                  CustomAppBar(
+                    leading: CustomBackButton(
+                      onTap: () {},
+                    ),
+                    title: const Text(
+                      "Reports",
+                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                    ),
+                    end: Container(
+                        child: CustomIconButton(
+                      onTap: () {},
+                      iconData: Icons.search_rounded,
+                    )),
                   ),
-                  title: const Text(
-                    "Reports",
-                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                  const SizedBox(
+                    height: 10,
                   ),
-                  end: Container(
-                      child: CustomIconButton(
-                    onTap: () {},
-                    iconData: Icons.search_rounded,
-                  )),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ReportPersonCard(),
-                ReportPersonCard(),
-                ReportPersonCard(),
-                ReportPersonCard(),
-              ],
-            ),
-          ]),
+                  Expanded(
+                      child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 80.0),
+                      child: Column(
+                        children: [
+                          ReportCard(),
+                          ReportCard(),
+                          ReportCard(),
+                          ReportCard(),
+                          ReportCard(),
+                        ],
+                      ),
+                    ),
+                  ))
+                ],
+              ),
+            ]),
+          ),
         ),
       ),
     );
   }
-
- 
 }
- Widget headerui(BuildContext context) {
-    return Container(
-      width: Config().deviceWidth(context),
-      alignment: Alignment.center,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Container(
-          width: 50,
-          height: 3,
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(100)),
-        ),
+
+Widget headerui(BuildContext context) {
+  return Container(
+    width: Config().deviceWidth(context),
+    alignment: Alignment.center,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Container(
+        width: 50,
+        height: 3,
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(100)),
       ),
-    );
-  }
+    ),
+  );
+}

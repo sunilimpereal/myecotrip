@@ -81,21 +81,21 @@ class _CustomIconButtonState extends State<CustomIconButton> {
         child: Material(
           borderRadius: BorderRadius.all(Radius.circular(12)),
           clipBehavior: Clip.hardEdge,
-          color: Colors.green.withOpacity(0.2),
+          color: Color(0xff24A645).withOpacity(0.07),
           child: Center(
             child: Ink(
               width: 32.0,
               height: 32.0,
               child: InkWell(
-                splashColor: Colors.green,
+                splashColor: Color(0xff24A645).withOpacity(0.5),
                 onTap: () {
                  widget.onTap();
                 },
                 child: Center(
                   child: Icon(
                     widget.iconData,
-                    color: Colors.green.shade800,
-                    size: 18,
+                    color:Color(0xff24A645),
+                    size: 24,
                   ),
                 ),
               ),

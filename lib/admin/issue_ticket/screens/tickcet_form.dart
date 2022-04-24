@@ -39,6 +39,10 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
     setState(() {});
   }
 
+  List<String> types =   ["Adult", "Child", "Student"];
+  List<String> genders = ["Male", "Female"];
+  String?  selectedType = null;
+  String?  selectedGender = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,6 +161,7 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                 ],
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ECTExtField(
                     controller: ageController,
@@ -175,12 +180,24 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                   IssTicDropDown(
                     width: Config().deviceWidth(context) * 0.3,
                     hint: "Type",
-                    options: ["Adult", "Child", "Student"],
+                    options: types,
+                    value: selectedType,
+                    onChanged: (data){
+                      setState(() {
+                        selectedType = data;
+                      });
+                    },
                   ),
                   IssTicDropDown(
                     width: Config().deviceWidth(context) * 0.3,
                     hint: "Gender",
-                    options: ["Male", "Female"],
+                    options: genders,
+                    value: selectedGender,
+                     onChanged: (data){
+                       setState(() {
+                         selectedGender = data;
+                       });
+                     },
                   )
                 ],
               ),
