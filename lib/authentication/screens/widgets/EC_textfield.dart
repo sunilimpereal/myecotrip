@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:myecotrip/constants/config.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -66,12 +67,12 @@ class _ECTExtFieldState extends State<ECTExtField> {
           log("snap received ${snapshot.data}");
           if (snapshot.hasError || widget.error.length > 1) {
             controller.changeErrorText(error: snapshot.error.toString());
-             errorText = snapshot.error.toString();
+            errorText = snapshot.error.toString();
             if (widget.error.length > 1) {
               controller.changeErrorText(error: widget.error);
               errorText = widget.error;
             }
-           
+
             controller.mountError();
             controller.showError();
             controller.shakeErrorText();
@@ -94,8 +95,9 @@ class _ECTExtFieldState extends State<ECTExtField> {
                     focusNode: widget.focusNode,
                     style: TextStyle(
                       fontSize: 16,
+                      fontFamily: Nunito,
                       color: Theme.of(context).textTheme.headline1!.color,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                     onTap: () {
                       widget.onTap();
@@ -104,21 +106,9 @@ class _ECTExtFieldState extends State<ECTExtField> {
                     onChanged: widget.onChanged,
                     keyboardType: widget.keyboardType,
                     decoration: InputDecoration(
-                      // errorText: "${snapshot.error}",
-                      border: InputBorder.none,
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
                       hintText: widget.labelText,
                       labelText: widget.labelText,
-                      prefixIconConstraints: const BoxConstraints(minWidth: 23, maxHeight: 20),
                       isDense: false,
-                      hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.3) , fontSize: 14),
-                      labelStyle: TextStyle(
-                        height: 0.9,
-                        fontSize: 14,
-                        color: Theme.of(context).textTheme.headline1!.color!.withOpacity(0.4),
-                      ),
                     ),
                   ),
                 ),
@@ -210,7 +200,8 @@ class ShakingErrorText extends StatelessWidget {
   final MultiTween<ErrorAnimationProp> _tween;
   final String errorText;
   // ignore: use_key_in_widget_constructors
-  ShakingErrorText({Key? key, required this.controller, this.timeToShake = 1, required this.errorText})
+  ShakingErrorText(
+      {Key? key, required this.controller, this.timeToShake = 1, required this.errorText})
       : _tween = MultiTween<ErrorAnimationProp>() {
     List.generate(
         timeToShake,

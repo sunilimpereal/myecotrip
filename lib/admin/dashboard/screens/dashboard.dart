@@ -24,13 +24,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      key: _key,
-      drawer: Drawer(child: DashDrawer()),
-      body: Container(
-        color: Color(0xfff8d9a4).withOpacity(0.1),
-        child: SafeArea(
+    return Center(
+      child: Scaffold(
+        key: _key,
+        drawer: Drawer(child: DashDrawer()),
+        body: SafeArea(
           child: Stack(
             children: [
               //body

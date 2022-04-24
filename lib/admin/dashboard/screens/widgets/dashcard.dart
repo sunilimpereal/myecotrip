@@ -31,14 +31,14 @@ class _DashCardState extends State<DashCard> {
       child: Material(
         elevation: 2,
         shadowColor: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         clipBehavior: Clip.hardEdge,
         color: Colors.white,
         child: Container(
           height: CardHeight,
           width: CardWidth,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: Color(0xff24A645),
               width: 1.0,
@@ -170,7 +170,7 @@ class _DashCardState extends State<DashCard> {
         shadowColor: Colors.green,
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(0.0),
-          bottomRight: Radius.circular(16.0),
+          bottomRight: Radius.circular(8.0),
           topLeft: Radius.circular(18.0),
           bottomLeft: Radius.circular(0.0),
         ),
@@ -180,7 +180,7 @@ class _DashCardState extends State<DashCard> {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
               topRight: Radius.circular(0.0),
-              bottomRight: Radius.circular(16.0),
+              bottomRight: Radius.circular(8.0),
               topLeft: Radius.circular(18.0),
               bottomLeft: Radius.circular(0.0),
             ),

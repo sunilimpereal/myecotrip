@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
 import 'package:myecotrip/admin/issue_ticket/screens/payment.dart';
+import 'package:myecotrip/admin/issue_ticket/screens/widgets/dropdownTextField.dart';
 import 'package:myecotrip/admin/issue_ticket/screens/widgets/dropdown_isstic.dart';
 import 'package:myecotrip/admin/reports/screens/report_slide.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
@@ -25,6 +26,16 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
   int i = 0;
 
   //textfields
+  TextEditingController locationController = TextEditingController();
+  FocusNode locationFocus = FocusNode();
+  TextEditingController trekController = TextEditingController();
+  FocusNode trekFocus = FocusNode();
+  TextEditingController slotController = TextEditingController();
+  FocusNode slotFocus = FocusNode();
+    TextEditingController genderController = TextEditingController();
+  FocusNode genderFocus = FocusNode();
+    TextEditingController typeController = TextEditingController();
+  FocusNode typeFocus = FocusNode();
   TextEditingController firstNameController = TextEditingController();
   FocusNode firstNameFocus = FocusNode();
   TextEditingController lastNameController = TextEditingController();
@@ -39,10 +50,10 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
     setState(() {});
   }
 
-  List<String> types =   ["Adult", "Child", "Student"];
+  List<String> types = ["Adult", "Child", "Student"];
   List<String> genders = ["Male", "Female"];
-  String?  selectedType = null;
-  String?  selectedGender = null;
+  String? selectedType = null;
+  String? selectedGender = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +79,9 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
               ),
             ),
-            form()
+            Container(
+                height: Config().deviceHeight(context) * 0.8,
+                child: SingleChildScrollView(child: form()))
           ],
         ),
       ),
@@ -80,139 +93,215 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
+        color: Colors.transparent,
         child: Container(
-          child: Column(
-            children: [
-              Row(
-                children: const [
-                  Text(
-                    "Add Visitor",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ECTExtField(
-                    controller: firstNameController,
-                    focusNode: firstNameFocus,
-                    heading: "First Name",
-                    icon: Icons.person,
-                    labelText: "First Name",
-                    obscureText: false,
-                    onChanged: loginBloc!.changePassword,
-                    onTap: onTap,
-                    onfocus: firstNameFocus.hasFocus,
-                    stream: loginBloc.password,
-                    width: Config().deviceWidth(context) * 0.45,
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: const [
+                      Text(
+                        "Add Visitor",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                      )
+                    ],
                   ),
-                  ECTExtField(
-                    controller: lastNameController,
-                    focusNode: lastNameFocus,
-                    heading: "Last Name",
-                    icon: Icons.person,
-                    labelText: "Last Name",
-                    obscureText: false,
-                    onChanged: loginBloc.changePassword,
-                    onTap: onTap,
-                    onfocus: lastNameFocus.hasFocus,
-                    stream: loginBloc.password,
-                    width: Config().deviceWidth(context) * 0.45,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  ECTExtField(
-                    controller: mobileNumberController,
-                    focusNode: mobileNumberFocus,
-                    heading: "Phone Number",
-                    icon: Icons.person,
-                    labelText: "Phone Number",
-                    obscureText: false,
-                    onChanged: loginBloc.changePassword,
-                    onTap: onTap,
-                    keyboardType: TextInputType.number,
-                    onfocus: mobileNumberFocus.hasFocus,
-                    stream: loginBloc.password,
-                    width: Config().deviceWidth(context) * 0.95,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  ECTExtField(
-                    controller: emailController,
-                    focusNode: emailFocus,
-                    heading: "Email",
-                    icon: Icons.person,
-                    labelText: "Email",
-                    obscureText: false,
-                    onChanged: loginBloc.changePassword,
-                    onTap: onTap,
-                    onfocus: emailFocus.hasFocus,
-                    stream: loginBloc.password,
-                    width: Config().deviceWidth(context) * 0.95,
-                  )
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ECTExtField(
-                    controller: ageController,
-                    focusNode: ageFocus,
-                    heading: "Age",
-                    icon: Icons.person,
-                    labelText: "Age",
-                    obscureText: false,
-                    onChanged: loginBloc.changePassword,
-                    onTap: onTap,
-                    keyboardType: TextInputType.number,
-                    onfocus: ageFocus.hasFocus,
-                    stream: loginBloc.password,
-                    width: Config().deviceWidth(context) * 0.2,
-                  ),
-                  IssTicDropDown(
-                    width: Config().deviceWidth(context) * 0.3,
-                    hint: "Type",
-                    options: types,
-                    value: selectedType,
-                    onChanged: (data){
-                      setState(() {
-                        selectedType = data;
-                      });
-                    },
-                  ),
-                  IssTicDropDown(
-                    width: Config().deviceWidth(context) * 0.3,
-                    hint: "Gender",
-                    options: genders,
-                    value: selectedGender,
-                     onChanged: (data){
-                       setState(() {
-                         selectedGender = data;
-                       });
-                     },
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  AdButton(
-                    icon: Icons.person_add,
-                    onPressed: () {},
-                    text: "Add Visitor",
-                    color: Colors.green.shade700,
-                  ),
-                ],
-              )
-            ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DropdownTextField(
+                      width: Config().deviceWidth(context) * 0.56,
+                      options: ['madikere', 'bengaluru', 'dsadsdsa'],
+                      onSelected: (e) {
+                        setState(() {
+                          locationController.text = e;
+                        });
+                      },
+                      labelText: "Select Location",
+                      controller: locationController,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: Row(
+                          children: [Icon(Icons.calendar_month_outlined), Text("20/4/2022")],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DropdownTextField(
+                      width: Config().deviceWidth(context) * 0.46,
+                      options: ['madikere', 'bengaluru', 'dsadsdsa'],
+                      onSelected: (e) {
+                        setState(() {
+                          trekController.text = e;
+                        });
+                      },
+                      labelText: "Select Trek",
+                      controller: trekController,
+                    ),
+                    DropdownTextField(
+                      width: Config().deviceWidth(context) * 0.45,
+                      options: ['6:00 AM', '4 :00 PM'],
+                      searchable: false,
+                      onSelected: (e) {
+                        setState(() {
+                          slotController.text = e;
+                        });
+                      },
+                      labelText: "Select Slot",
+                      controller: slotController,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ECTExtField(
+                      controller: firstNameController,
+                      focusNode: firstNameFocus,
+                      heading: "First Name",
+                      icon: Icons.person,
+                      labelText: "First Name",
+                      obscureText: false,
+                      onChanged: loginBloc!.changePassword,
+                      onTap: onTap,
+                      onfocus: firstNameFocus.hasFocus,
+                      stream: loginBloc.password,
+                      width: Config().deviceWidth(context) * 0.46,
+                    ),
+                    ECTExtField(
+                      controller: lastNameController,
+                      focusNode: lastNameFocus,
+                      heading: "Last Name",
+                      icon: Icons.person,
+                      labelText: "Last Name",
+                      obscureText: false,
+                      onChanged: loginBloc.changePassword,
+                      onTap: onTap,
+                      onfocus: lastNameFocus.hasFocus,
+                      stream: loginBloc.password,
+                      width: Config().deviceWidth(context) * 0.46,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    ECTExtField(
+                      controller: mobileNumberController,
+                      focusNode: mobileNumberFocus,
+                      heading: "Phone Number",
+                      icon: Icons.person,
+                      labelText: "Phone Number",
+                      obscureText: false,
+                      onChanged: loginBloc.changePassword,
+                      onTap: onTap,
+                      keyboardType: TextInputType.number,
+                      onfocus: mobileNumberFocus.hasFocus,
+                      stream: loginBloc.password,
+                      width: Config().deviceWidth(context) * 0.93,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    ECTExtField(
+                      controller: emailController,
+                      focusNode: emailFocus,
+                      heading: "Email",
+                      icon: Icons.person,
+                      labelText: "Email",
+                      obscureText: false,
+                      onChanged: loginBloc.changePassword,
+                      onTap: onTap,
+                      onfocus: emailFocus.hasFocus,
+                      stream: loginBloc.password,
+                      width: Config().deviceWidth(context) * 0.93,
+                    )
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ECTExtField(
+                      controller: ageController,
+                      focusNode: ageFocus,
+                      heading: "Age",
+                      icon: Icons.person,
+                      labelText: "Age",
+                      obscureText: false,
+                      onChanged: loginBloc.changePassword,
+                      onTap: onTap,
+                      keyboardType: TextInputType.number,
+                      onfocus: ageFocus.hasFocus,
+                      stream: loginBloc.password,
+                      width: Config().deviceWidth(context) * 0.2,
+                    ),
+                    DropdownTextField(
+                      width: Config().deviceWidth(context) * 0.35,
+                      options: ['Male', 'Female'],
+                      searchable: false,
+                      onSelected: (e) {
+                        setState(() {
+                          genderController.text = e;
+                        });
+                      },
+                      labelText: "Select Gender",
+                      controller: genderController,
+                    ),
+                    DropdownTextField(
+                      width: Config().deviceWidth(context) * 0.35,
+                      options: ['Adult', 'Child', 'Student'],
+                      searchable: false,
+                      onSelected: (e) {
+                        setState(() {
+                          typeController.text = e;
+                        });
+                      },
+                      labelText: "Select Type",
+                      controller: typeController,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AdButton(
+                      width: Config().deviceWidth(context) * 0.93,
+                      icon: Icons.person_add,
+                      onPressed: () {},
+                      text: "Add Visitor",
+                      color: Colors.green.shade700,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 300,
+                )
+              ],
+            ),
           ),
         ),
       ),

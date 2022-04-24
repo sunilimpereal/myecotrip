@@ -28,11 +28,11 @@ class AdButton extends StatelessWidget {
     return Container(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // <-- Radius
+                    borderRadius: BorderRadius.circular(8), // <-- Radius
                     side: BorderSide(color: borderColor)),
                 elevation: 4,
                 primary: color),
@@ -40,7 +40,7 @@ class AdButton extends StatelessWidget {
               onPressed();
             },
             child: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +49,7 @@ class AdButton extends StatelessWidget {
                     text,
                     style: TextStyle(
                       color: textColor,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       fontSize: 18,
                     ),
                   ),
@@ -58,7 +58,7 @@ class AdButton extends StatelessWidget {
                   ),
                   Material(
                     color: circleColor,
-                      elevation: 2,
+                      elevation: 0,
                       borderRadius: const BorderRadius.all(Radius.circular(100)),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myecotrip/admin/admin_main.dart';
 import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
 import 'package:myecotrip/admin/ticket_scan/screen/process_scan.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const AuthenticationScreen(),
-      home: const AdminDashboard(),
+      home: const AdminApp(),
     );
   }
 }

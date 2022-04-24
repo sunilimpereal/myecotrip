@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/reports/screens/natureGuidereport.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
+import 'package:myecotrip/constants/config.dart';
 
 class DashDrawer extends StatefulWidget {
   const DashDrawer({Key? key}) : super(key: key);
@@ -95,7 +96,10 @@ class _DashDrawerState extends State<DashDrawer> {
             padding: EdgeInsets.only(left: 8.0),
             child: Text(
               text,
-              style: TextStyle(color: Color(0xff10461D)),
+              style: TextStyle(color: Color(0xff10461D  ),
+              fontFamily: Nunito,
+              fontWeight:FontWeight.bold
+              ),
             ),
           )
         ],
