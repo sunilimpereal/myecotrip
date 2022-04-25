@@ -72,7 +72,9 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
           children: [
             CustomAppBar(
               leading: CustomBackButton(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ),
               title: const Text(
                 "Issue Ticket",

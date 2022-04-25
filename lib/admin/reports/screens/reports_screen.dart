@@ -74,7 +74,7 @@ class ReportsState extends State<Reports> {
                 children: [
                   CustomAppBar(
                     leading: CustomBackButton(
-                      onTap: () {},
+                      onTap: () {  Navigator.pop(context);},
                     ),
                     title: const Text(
                       "Reports",

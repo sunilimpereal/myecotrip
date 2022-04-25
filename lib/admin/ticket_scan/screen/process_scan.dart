@@ -29,7 +29,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                   children: [
                     CustomAppBar(
                       leading: CustomBackButton(
-                        onTap: () {},
+                        onTap: () {  Navigator.pop(context);},
                       ),
                       title: Container(
                         child: Text(
@@ -53,9 +53,12 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
               Positioned(
                 bottom: 0,
                 child: Container(
+                  width: Config().deviceWidth(context),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AdButton(
+                        width: Config().deviceWidth(context)*0.5,
                         icon: Icons.close,
                         onPressed: () {
                           Navigator.pop(context);
@@ -64,6 +67,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                         color: Colors.red.shade400,
                       ),
                       AdButton(
+                        width: Config().deviceWidth(context)*0.5,
                           icon: Icons.check,
                           onPressed: () {
                             Navigator.pop(context);

@@ -12,6 +12,7 @@ import 'package:myecotrip/authentication/screens/login_screen.dart';
 import 'package:myecotrip/constants/app_fonts.dart';
 import 'package:myecotrip/constants/app_styles.dart';
 import 'package:myecotrip/constants/config.dart';
+import 'package:myecotrip/constants/themes/theme.dart';
 import 'package:myecotrip/main/navpage/main_page.dart';
 import 'package:myecotrip/utils/shared_pref.dart';
 
@@ -51,11 +52,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ecotourism',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // home: const AuthenticationScreen(),
-      home: const AdminApp(),
+      theme:MainTheme,
+      home: const AuthenticationScreen(),
+      // home: const AdminApp(),
     );
   }
 }

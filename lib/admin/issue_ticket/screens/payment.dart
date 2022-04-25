@@ -29,7 +29,7 @@ class _PaymentState extends State<Payment> {
               children: [
                 CustomAppBar(
                   leading: CustomBackButton(
-                    onTap: () {},
+                    onTap: () {Navigator.pop(context);},
                   ),
                   title: const Text(
                     "Payments",

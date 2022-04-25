@@ -15,7 +15,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int currentindex = 0;
-  List pages = [
+  List pages = const [
     HomeScreen(),
     SearchScreen(),
     NewsScreen(),
@@ -34,7 +34,10 @@ class _MainPageState extends State<MainPage> {
       body: Container(
         child: Stack(
           children: [
-            pages[currentindex],
+            Container(
+              height: Config().deviceHeight(context),
+              child: pages[currentindex],
+            ),
             Positioned(
               bottom: 0,
               child: Container(
@@ -49,7 +52,7 @@ class _MainPageState extends State<MainPage> {
                     clipBehavior: Clip.hardEdge,
                     child: BottomNavigationBar(
                       currentIndex: currentindex,
-                      type: BottomNavigationBarType.shifting,
+                      type: BottomNavigationBarType.fixed,
                       selectedItemColor: Colors.green,
                       unselectedItemColor: Colors.grey.withOpacity(0.5),
                       showSelectedLabels: false,
@@ -57,10 +60,18 @@ class _MainPageState extends State<MainPage> {
                       elevation: 0,
                       onTap: onTap,
                       items: [
-                        navItem(currentIndex: currentindex, index: 0, name: "home"),
-                        navItem(currentIndex: currentindex, index: 1, name: "search"),
-                        navItem(currentIndex: currentindex, index: 2, name: "news"),
-                        navItem(currentIndex: currentindex, index: 3, name: "profile"),
+                        navItem(
+                            currentIndex: currentindex, index: 0, name: "home"),
+                        navItem(
+                            currentIndex: currentindex,
+                            index: 1,
+                            name: "search"),
+                        navItem(
+                            currentIndex: currentindex, index: 2, name: "news"),
+                        navItem(
+                            currentIndex: currentindex,
+                            index: 3,
+                            name: "profile"),
                       ],
                     ),
                   ),
@@ -80,7 +91,9 @@ BottomNavigationBarItem navItem({
   required String name,
 }) {
   return BottomNavigationBarItem(
-    icon: SvgIcon(color: currentIndex == index ? Colors.green : Colors.grey, path: "${name}.svg"),
+    icon: SvgIcon(
+        color: currentIndex == index ? Colors.green : Colors.grey,
+        path: "${name}.svg"),
     label: name,
   );
 }

@@ -106,6 +106,7 @@ class _ECTExtFieldState extends State<ECTExtField> {
                     onChanged: widget.onChanged,
                     keyboardType: widget.keyboardType,
                     decoration: InputDecoration(
+                      
                       hintText: widget.labelText,
                       labelText: widget.labelText,
                       isDense: false,

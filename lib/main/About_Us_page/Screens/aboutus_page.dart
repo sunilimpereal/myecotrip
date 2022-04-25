@@ -4,7 +4,6 @@ import 'package:myecotrip/constants/config.dart';
 import '../../Trekking_Details_page/Screens/details_homepage.dart';
 import '../../Trekking_Details_page/Widgets/back_button.dart';
 
-
 class AboutUs extends StatefulWidget {
   const AboutUs({Key? key}) : super(key: key);
 
@@ -54,13 +53,11 @@ Considering that multitude of tourists visiting India and the domestic tourists 
                   "About Us",
                   style: TextStyle(color: Colors.white, fontSize: 28),
                 )),
-            CustomBackButton(onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const TrekDetailslMainpage()),
-              );
-            }),
+            SafeArea(
+              child: CustomBackButton(onTap: () {
+                Navigator.pop(context);
+              }),
+            ),
           ],
         ),
       ),

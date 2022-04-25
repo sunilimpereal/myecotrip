@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:myecotrip/constants/config.dart';
 
-ThemeData get Theme1 {
-  Color primary = Color(0xFF048998);
-  Color secondary = Color(0xFF3BB4C1);
-  Color background = Color(0xFFE3E3E3);
-  Color backGroundSecondary = Color(0xFFF6F5F5);
-  Color textColor = Color(0xFF152D35);
+ThemeData get MainTheme {
+  Color primary = const Color(0xff24A645);
+  Color secondary = const Color(0xffFAF6F0);
+  Color background = const Color(0xFFFAF6F0);
+  Color backGroundSecondary = Colors.white;
+  Color textColor = const Color(0xFF031927);
   String themeFont = Montserrat;
 
   return ThemeData(
@@ -17,10 +16,8 @@ ThemeData get Theme1 {
       scaffoldBackgroundColor: background,
 
       //hover Color
-      hoverColor: Color(0xffe5e5e5).withOpacity(0.2),
-      highlightColor: primary.withOpacity(0.2),
-      splashColor: secondary.withOpacity(0.4),
-      cardColor: Color(0xFF404656).withOpacity(0.1),
+      highlightColor: background.withOpacity(0.2),
+      splashColor: primary.withOpacity(0.4),
 
       // icons
       iconTheme: IconThemeData(color: primary),
@@ -28,10 +25,9 @@ ThemeData get Theme1 {
       //button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: OutlinedButton.styleFrom(
-            primary: Color(0xFFFFFFFF),
-            backgroundColor: Color(0xFF048998),
+            // primary: primary,
+            backgroundColor: backGroundSecondary,
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
-            padding: EdgeInsets.all(8),
             visualDensity: VisualDensity(
               horizontal: 1,
               vertical: 1,
@@ -41,30 +37,35 @@ ThemeData get Theme1 {
       //border
       //drop down
       tabBarTheme: TabBarTheme(
-        labelColor: primary,
-        unselectedLabelColor: Colors.red,
-        labelStyle: TextStyle(
-          color: primary,
-
-        )
-      ),
-      appBarTheme: AppBarTheme(
-        backgroundColor: primary,
-        iconTheme: IconThemeData(color: Color(0xFFffffff), size: 16),
-        titleTextStyle: TextStyle(color: Color(0xFFE3E3E3), fontFamily: themeFont),
-        actionsIconTheme: IconThemeData(color: Color(0xFFffffff).withOpacity(0.8)),
-      ),
-      cardTheme: CardTheme(),
+          labelColor: primary,
+          unselectedLabelColor: Colors.red,
+          labelStyle: TextStyle(
+            color: primary,
+          )),
+          
       inputDecorationTheme: InputDecorationTheme(
-          labelStyle: TextStyle(color: textColor),
-          hintStyle: TextStyle(color: textColor.withOpacity(0.3)),
-          focusColor: primary,
-          hoverColor: primary),
+        
+        border: InputBorder.none,
+        contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+        isDense: false,
+        hintStyle: TextStyle(
+          fontSize: 14,
+          color: textColor.withOpacity(0.2),
+          fontFamily: Nunito,
+        ),
+        labelStyle: TextStyle(
+          height: 0.9,
+          fontSize: 14,
+          fontFamily: Nunito,
+          color: textColor,
+        ),
+      ),
       fontFamily: themeFont,
       textSelectionTheme: TextSelectionThemeData(
           cursorColor: primary,
           selectionColor: primary.withOpacity(0.5),
           selectionHandleColor: primary),
+          
       colorScheme: ColorScheme(
           primary: primary,
           primaryVariant: primary.withOpacity(0.5),

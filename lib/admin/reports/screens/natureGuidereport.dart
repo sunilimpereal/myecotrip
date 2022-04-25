@@ -21,7 +21,7 @@ class _NatureGuideReportState extends State<NatureGuideReport> {
             children: [
               CustomAppBar(
                 leading: CustomBackButton(
-                  onTap: () {},
+                  onTap: () {  Navigator.pop(context);},
                 ),
                 title: const Text(
                   "Nature Guide Report",

@@ -1,7 +1,12 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:myecotrip/constants/config.dart';
+import 'package:myecotrip/main/About_Us_page/Screens/aboutus_page.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Screens/details_homepage.dart';
+import 'package:myecotrip/main/Trekking_Details_page/Widgets/back_button.dart';
+import 'package:myecotrip/main/treks_page/TreksScreen.dart';
 
 /// Floating Courasal Slider that is used
 /// in home screen after heading
@@ -17,10 +22,10 @@ class _FloatingCouraslSliderState extends State<FloatingCouraslSlider> {
   Widget build(BuildContext context) {
     return CarouselSlider(
       items: [
-        CarouselItem(image: "crousal1.png", name: "", ontap: () {}),
-        CarouselItem(image: "crousal2.png", name: "", ontap: () {}),
-        CarouselItem(image: "crousal3.png", name: "", ontap: () {}),
-        CarouselItem(image: "crousal1.png", name: "", ontap: () {})
+        CarouselItem(
+            image: "crousal1.png", name: "Bangalore", ontap: () => pushToTrekPage(context)),
+        CarouselItem(image: "crousal2.png", name: "Belagavi", ontap: () => pushToTrekPage(context)),
+        CarouselItem(image: "crousal3.png", name: "Bellary", ontap: () => pushToTrekPage(context)),
       ],
       options: CarouselOptions(
         height: Config().deviceHeight(context) * 0.25,
@@ -32,10 +37,21 @@ class _FloatingCouraslSliderState extends State<FloatingCouraslSlider> {
   }
 }
 
+void pushToTrekPage(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => TreksScreen(
+        location: "Bangalore",
+      ),
+    ),
+  );
+}
+
 class CarouselItem extends StatelessWidget {
   String image;
   String name;
-  Function ontap;
+  Function() ontap;
   CarouselItem({Key? key, required this.image, required this.name, required this.ontap})
       : super(key: key);
 
@@ -47,14 +63,7 @@ class CarouselItem extends StatelessWidget {
       color: Colors.white,
       elevation: 0,
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TrekDetailslMainpage(),
-            ),
-          );
-        },
+        onTap: ontap,
         splashColor: Colors.red,
         child: Ink(
           child: Stack(
@@ -68,20 +77,59 @@ class CarouselItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: double.maxFinite,
-                    height: Config().deviceHeight(context) * 0.3 * 0.3,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                      Colors.green.withOpacity(0.5),
-                      Colors.transparent,
-                    ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 80,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff127855).withOpacity(0.5),
+                        Color(0xff127855).withOpacity(0.8),
+                        Color(0xff093C2B)
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                   ),
-                ],
-              ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
+                            ),
+                            SizedBox(
+                              height: Config().deviceHeight(context) * 0.005,
+                            ),
+                            const Text(
+                              "10 Treks",
+                              style: TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                          ],
+                        ),
+                        CustomBackButton(
+                            icon: Icons.arrow_forward_ios,
+                            theme: BackButtonTheme.light,
+                            onTap: ontap)
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

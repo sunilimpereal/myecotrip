@@ -55,13 +55,11 @@ class TrekDetailslMainpageState extends State<TrekDetailslMainpage> {
               top: Config().deviceHeight(context) * 0.4, child: trekinfo()),
           slideopen(),
           !open
-              ? CustomBackButton(onTap: () {
-                  print("sd");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AboutUs()),
-                  );
-                })
+              ? SafeArea(
+                  child: CustomBackButton(onTap: () {
+                    Navigator.pop(context);
+                  }),
+                )
               : Container(),
         ]),
       ),
@@ -202,12 +200,14 @@ class TrekDetailslMainpageState extends State<TrekDetailslMainpage> {
           color: open ? Colors.white : Colors.transparent,
           child: Stack(
             children: [
-              CustomBackButton(onTap: () {
-                setState(() {
-                  panelController.close();
-                  open = false;
-                });
-              }),
+              SafeArea(
+                child: CustomBackButton(onTap: () {
+                  setState(() {
+                    panelController.close();
+                    open = false;
+                  });
+                }),
+              ),
               Positioned(
                   top: Config().deviceHeight(context) * 0.07,
                   right: Config().deviceHeight(context) * 0.03,

@@ -7,8 +7,7 @@ class DateTile extends StatefulWidget {
   TimeOfDay? time;
   void Function()? onTap;
 
-  DateTile({Key? key, this.date, this.time, this.onTap, required this.title})
-      : super(key: key);
+  DateTile({Key? key, this.date, this.time, this.onTap, required this.title}) : super(key: key);
 
   @override
   _DateTileState createState() => _DateTileState();
@@ -32,12 +31,14 @@ class _DateTileState extends State<DateTile> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 4.0),
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
+              child: widget.title == ''
+                  ? Container()
+                  : Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
             ),
             SizedBox(
               height: 10,
@@ -54,15 +55,22 @@ class _DateTileState extends State<DateTile> {
                       color: Colors.white,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 5),
-                      child: Text(
-                        widget.time == null
-                            ? DateFormat("dd-MM-yyyy").format(widget.date!)
-                            : formatTimeOfDay(widget.time!),
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                      child: Row(
+                        children: [
+                          Icon(Icons.calendar_month_outlined),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            widget.time == null
+                                ? DateFormat("dd-MM-yyyy").format(widget.date!)
+                                : formatTimeOfDay(widget.time!),
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -77,9 +85,7 @@ class _DateTileState extends State<DateTile> {
 }
 
 Future<void> selectDate(
-    {required DateTime date,
-    required Function onSelected,
-    required BuildContext context}) async {
+    {required DateTime date, required Function onSelected, required BuildContext context}) async {
   final DateTime? picked = await showDatePicker(
     context: context,
     initialDate: date,
