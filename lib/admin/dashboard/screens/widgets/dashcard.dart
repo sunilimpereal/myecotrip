@@ -1,8 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:myecotrip/constants/config.dart';
+import 'package:myecotrip/utils/svg_icon.dart';
+
+import '../../../../utils/printer/printer.dart';
+
+class GradientColors {
+  Color color1;
+  Color color2;
+  GradientColors({required this.color1, required this.color2});
+}
 
 class DashCard extends StatefulWidget {
-  const DashCard({Key? key}) : super(key: key);
+  GradientColors colors;
+  String name;
+  String location;
+  String slot;
+  String total;
+  String visitors;
+
+  DashCard({
+    Key? key,
+    required this.colors,
+    required this.location,
+    required this.name,
+    required this.slot,
+    required this.total,
+    required this.visitors,
+  }) : super(key: key);
 
   @override
   State<DashCard> createState() => _DashCardState();
@@ -11,6 +37,7 @@ class DashCard extends StatefulWidget {
 class _DashCardState extends State<DashCard> {
   late double CardHeight;
   late double CardWidth;
+
   @override
   void initState() {
     super.initState();
@@ -26,34 +53,35 @@ class _DashCardState extends State<DashCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
-      child: Material(
-        elevation: 2,
-        shadowColor: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        clipBehavior: Clip.hardEdge,
-        color: Colors.white,
-        child: Container(
-          height: CardHeight,
-          width: CardWidth,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Color(0xff24A645),
-              width: 1.0,
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          child: Container(
+            height: CardHeight,
+            width: CardWidth,
+            decoration: BoxDecoration(
+              // color: widget.color,
+              gradient: LinearGradient(colors: [
+                widget.colors.color1.withOpacity(0.6),
+                widget.colors.color2.withOpacity(0.6)
+              ]),
+              borderRadius: BorderRadius.circular(20),
             ),
-          ),
-          child: Ink(
-            child: InkWell(
-              splashColor: Colors.green[50]!.withOpacity(0.5),
-              highlightColor: Colors.transparent,
-              onTap: () {},
-              child: totalStack(),
+            child: Ink(
+              child: InkWell(
+                splashColor: Colors.green[50]!.withOpacity(0.5),
+                highlightColor: Colors.transparent,
+                onTap: () {},
+                child: totalStack(),
+              ),
             ),
           ),
         ),
-      ),
+        Positioned(bottom: 20, right: 20, child: addbutton()),
+        Positioned(top: 30, right: 30, child: slot()),
+        Positioned(bottom: 30, left: 35, child: availability()),
+      ],
     );
   }
 
@@ -61,17 +89,19 @@ class _DashCardState extends State<DashCard> {
   /// overlaps all the widgets with inkwell
   Widget totalStack() {
     return Padding(
-      padding: const EdgeInsets.all(0.0),
+      padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: [
           Column(
             children: [
-              title(),
-              bottombar(),
+              Row(
+                children: [title()],
+              ),
+              // bottombar(),
             ],
           ),
-          Positioned(bottom: 0, right: 0, child: addbutton()),
-          Positioned(top: 10, right: 10, child: bookingsNumber())
+
+          // Positioned(top: 10, right: 10, child: bookingsNumber())
         ],
       ),
     );
@@ -82,17 +112,18 @@ class _DashCardState extends State<DashCard> {
       height: CardHeight * 0.7 - 2,
       padding: const EdgeInsets.all(8),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Row(
               children: [
                 Text(
-                  'Madikere',
+                  widget.name,
                   style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: Montserrat,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: Nunito,
                   ),
                 )
               ],
@@ -105,10 +136,10 @@ class _DashCardState extends State<DashCard> {
             children: [
               const Icon(
                 Icons.location_on_sharp,
-                size: 18,
+                size: 16,
               ),
               Text(
-                'Bengaluru',
+                widget.location,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
@@ -122,88 +153,118 @@ class _DashCardState extends State<DashCard> {
     );
   }
 
-  Widget bottombar() {
+  //border
+  Widget addbutton() {
     return Material(
-      color: Color(0xff24A645),
-      child: Container(
-        width: CardWidth,
-        height: CardHeight * 0.3,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: [
-            const Text(
-              " MORNING SLOT 6:00 AM",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            const SizedBox(
-              width: 32,
-            ),
-            Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.green[900],),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "20/30",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
+      elevation: 3,
+      shadowColor: widget.colors.color1.withOpacity(0.5),
+      color: widget.colors.color1,
+      clipBehavior: Clip.hardEdge,
+      borderRadius: BorderRadius.circular(20),
+      child: Ink(
+        child: InkWell(
+          splashColor: widget.colors.color2,
+          onTap: () async {
+            Printer printer = Printer();
+            Map<String, dynamic> data = {
+              'bookingId': 'ECOTRIP67020220225015403',
+              'noOfTickets': 3,
+              'bookingDate': '2022-02-25',
+              'trekkingDate': '2022-02-26',
+              'timeSlot': '04:00 AM',
+              'total': 'Rs. 129.38',
+              'names': ['name1', 'name2', 'first  last'],
+              'age': ['23', '23', '24'],
+              'sex': ['female', 'male', 'male'],
+              'trailName': 'Skandagiri / Bangalore',
+              'startingPoint': 'Kalwara Village',
+              'endPoint': 'Skandagiri Hilltop',
+              'contactNo': '+91918722254201',
+              'qrcode': '918722254201',
+              'isExitTicket': false,
+            };
+            final result = await printer.printReceipt(data);
+            log(result.toString());
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Container(
+                  height: 32,
+                  width: 32,
+                  child: SvgIcon(color: Colors.white, path: 'tickets.svg'),
                 ),
-              ),
-            )
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  // bookins
-  // visitores
-
-  //border
-
-  Widget addbutton() {
-    return Material(
-        elevation: 10,
-        shadowColor: Colors.green,
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(0.0),
-          bottomRight: Radius.circular(8.0),
-          topLeft: Radius.circular(18.0),
-          bottomLeft: Radius.circular(0.0),
-        ),
-        color: Colors.green[900],
-        clipBehavior: Clip.hardEdge,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(0.0),
-              bottomRight: Radius.circular(8.0),
-              topLeft: Radius.circular(18.0),
-              bottomLeft: Radius.circular(0.0),
-            ),
-            border: Border.all(
-              color: Colors.white,
-              width: 2.0,
-            ),
+  Widget slot() {
+    return Container(
+        child: Row(
+      children: [
+        Container(
+          width: 30,
+          height: 30,
+          child: SvgIcon(
+            color: Colors.white,
+            path: widget.slot != "6:00 AM" ? 'sunrise1.svg' : 'sunrise2.svg',
           ),
-          child: Ink(
-            child: InkWell(
-              splashColor: Colors.green,
-              onTap: () {},
-              child: const Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Icon(
-                  Icons.add_rounded,
-                  color: Colors.white,
-                  size: 34,
-                ),
+        ),
+        SizedBox(
+          width: 8,
+        ),
+        Column(
+          children: [
+            Text(
+              widget.slot,
+              style: TextStyle(
+                fontFamily: Montserrat,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
-          ),
-        ));
+            Text(
+              "Morning Slot",
+              style: TextStyle(
+                fontFamily: Nunito,
+                fontSize: 11,
+              ),
+            )
+          ],
+        )
+      ],
+    ));
+  }
+
+  Widget availability() {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: const [
+                Text(
+                  "60 / ",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "100",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget bookingsNumber() {

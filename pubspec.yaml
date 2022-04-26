@@ -51,6 +51,8 @@ dependencies:
   colorful_safe_area: ^0.3.0
   date_time_picker: ^2.1.0
   intl: ^0.17.0
+  date_util: ^0.1.4
+  scroll_to_index: ^1.0.6
 
   
 

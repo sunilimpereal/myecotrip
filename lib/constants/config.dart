@@ -10,7 +10,8 @@ String IMAGES = 'assets/images/';
 String ICONS = 'assets/icons/';
 String LOTTIE = 'assets/lottie/';
 
-
+//printer
+const CHANNEL = 'brother/print';
 
 String Roboto = 'Roboto-Medium';
 String Montserrat = 'Montserrat-VariableFont_wght';

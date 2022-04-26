@@ -56,3 +56,10 @@ android {
 flutter {
     source '../..'
 }
+
+dependencies {
+    implementation files('..\\libs\\cie-bluetooth-printer-sdk-v2.2.8.jar')
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
+
+}

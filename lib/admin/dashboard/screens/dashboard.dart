@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
+import 'package:myecotrip/admin/dashboard/screens/widgets/dashboardAppBar.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/dashboard_card.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/dashcard.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/drawer.dart';
@@ -22,88 +24,93 @@ class AdminDashboard extends StatefulWidget {
 
 class _AdminDashboardState extends State<AdminDashboard> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+
+  List<GradientColors> colors = [
+    GradientColors(
+      color1: Color(0xffBFF3BF),
+      color2: Color(0xffB3E3B3),
+    ),
+    GradientColors(
+      color1: Color(0xffDEDEFF),
+      color2: Color(0xffC3C3E1),
+    ),
+    GradientColors(
+      color1: Color(0xffF2BFBF),
+      color2: Color(0xffE3B3B3),
+    ),
+    GradientColors(
+      color1: Color(0xffF2EDBF),
+      color2: Color(0xffE3E1B3),
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: _key,
         drawer: Drawer(child: DashDrawer()),
         body: SafeArea(
           child: Stack(
             children: [
               //body
-              Column(
+              Stack(
                 children: [
-                  CustomAppBar(
-                    leading: CustomIconButton(
-                      onTap: () {
-                        _key.currentState!.openDrawer();
-                      },
-                      iconData: Icons.sort_rounded,
-                    ),
-                    title: const Text(
-                      "Dashboard",
-                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-                    ),
-                    end: Container(
-                        child: CustomIconButton(
-                      onTap: () {},
-                      iconData: Icons.search_rounded,
-                    )),
-                  ),
-                  trekTitle(),
                   Container(
+                      padding: EdgeInsets.only(top: Config().deviceHeight(context) * 0.148),
                       child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TrekDetails(),
-                      // Reportcard(),
-                    ],
-                  )),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TrekDetails(),
+                          // Reportcard(),
+                        ],
+                      )),
+                  DashboardAppBar(),
                 ],
               ),
 
               // bottom buttons
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: Config().deviceWidth(context),
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      AdButton(
-                        width: Config().deviceWidth(context) * 0.5,
-                        icon: Icons.calendar_view_day_rounded,
-                        color: Colors.white,
-                        textColor: Colors.green,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => IssueTicketForm(),
-                            ),
-                          );
-                        },
-                        text: 'Ticket',
-                      ),
-                      AdButton(
-                        width: Config().deviceWidth(context) * 0.5,
-                        icon: Icons.qr_code,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ScanScreen(),
-                            ),
-                          );
-                        },
-                        text: 'Scan',
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              // Positioned(
+              //   bottom: 0,
+              //   child: Container(
+              //     width: Config().deviceWidth(context),
+              //     color: Colors.white,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         AdButton(
+              //           width: Config().deviceWidth(context) * 0.5,
+              //           icon: Icons.calendar_view_day_rounded,
+              //           color: Colors.white,
+              //           textColor: Colors.green,
+              //           onPressed: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) => IssueTicketForm(),
+              //               ),
+              //             );
+              //           },
+              //           text: 'Ticket',
+              //         ),
+              //         AdButton(
+              //           width: Config().deviceWidth(context) * 0.5,
+              //           icon: Icons.qr_code,
+              //           onPressed: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) => ScanScreen(),
+              //               ),
+              //             );
+              //           },
+              //           text: 'Scan',
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),
@@ -113,16 +120,47 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   Widget TrekDetails() {
     return Container(
-      height: Config().deviceHeight(context) * 0.8,
+      height: Config().deviceHeight(context) * 0.78,
       child: SingleChildScrollView(
+        dragStartBehavior: DragStartBehavior.start,
+        physics: BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 80.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DashCard(),
-              DashCard(),
-              DashCard(),
-              DashCard(),
+              DashCard(
+                colors: colors[0],
+                location: 'Bengaluru',
+                visitors: '15',
+                total: '30',
+                slot: '6:30 AM',
+                name: 'Makalidurga',
+              ),
+              DashCard(
+                colors: colors[1],
+                location: 'Bengaluru',
+                visitors: '15',
+                total: '30',
+                slot: '6:00 AM',
+                name: 'Kaiwara Betta',
+              ),
+              DashCard(
+                colors: colors[2],
+                location: 'Bengaluru',
+                visitors: '15',
+                total: '30',
+                slot: '6:30 AM',
+                name: 'Skandagiri',
+              ),
+              DashCard(
+                colors: colors[3],
+                location: 'Bengaluru',
+                visitors: '15',
+                total: '30',
+                slot: '6:30 AM',
+                name: 'Madikere',
+              ),
             ],
           ),
         ),

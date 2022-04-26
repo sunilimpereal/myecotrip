@@ -4,7 +4,8 @@ import 'package:myecotrip/constants/config.dart';
 ThemeData get AdminTheme {
   Color primary = const Color(0xff24A645);
   Color secondary = const Color(0xffFAF6F0);
-  Color background = const Color(0xFFFAF6F0);
+  //Color background = const Color(0xFFFAF6F0);
+  Color background = Colors.white;
   Color backGroundSecondary = Colors.white;
   Color textColor = const Color(0xFF031927);
   String themeFont = Montserrat;
@@ -42,9 +43,7 @@ ThemeData get AdminTheme {
           labelStyle: TextStyle(
             color: primary,
           )),
-          
       inputDecorationTheme: InputDecorationTheme(
-        
         border: InputBorder.none,
         contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
         isDense: false,
@@ -65,7 +64,6 @@ ThemeData get AdminTheme {
           cursorColor: primary,
           selectionColor: primary.withOpacity(0.5),
           selectionHandleColor: primary),
-          
       colorScheme: ColorScheme(
           primary: primary,
           primaryVariant: primary.withOpacity(0.5),

@@ -4,12 +4,10 @@ import 'package:myecotrip/constants/config.dart';
 enum BackButtonTheme { light, dark, green }
 
 ThemeValues getTheme(BackButtonTheme theme) {
-  ThemeValues light =
-      ThemeValues(primary: Colors.green.shade800, secondary: Colors.white);
-  ThemeValues dark =
-      ThemeValues(primary: Colors.green.shade800, secondary: Colors.black);
-  ThemeValues green = ThemeValues(
-      primary: Colors.green.shade800, secondary: Colors.green.withOpacity(0.2));
+  ThemeValues light = ThemeValues(primary: Colors.green.shade800, secondary: Colors.white);
+  ThemeValues dark = ThemeValues(primary: Colors.green.shade800, secondary: Colors.black);
+  ThemeValues green =
+      ThemeValues(primary: Colors.green.shade800, secondary: Colors.green.withOpacity(0.2));
   switch (theme) {
     case BackButtonTheme.dark:
       return dark;
@@ -96,8 +94,8 @@ class _CustomBackButtonState extends State<CustomBackButton> {
 class CustomIconButton extends StatefulWidget {
   final Function onTap;
   IconData iconData;
-
-  CustomIconButton({Key? key, required this.onTap, required this.iconData})
+  double size;
+  CustomIconButton({Key? key, required this.onTap, this.size = 32, required this.iconData})
       : super(key: key);
 
   @override
@@ -125,8 +123,8 @@ class _CustomIconButtonState extends State<CustomIconButton> {
           color: Color(0xff24A645).withOpacity(0.07),
           child: Center(
             child: Ink(
-              width: 32.0,
-              height: 32.0,
+              width: widget.size,
+              height: widget.size,
               child: InkWell(
                 splashColor: Color(0xff24A645).withOpacity(0.5),
                 onTap: () {
