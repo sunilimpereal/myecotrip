@@ -55,7 +55,7 @@ class _DashDrawerState extends State<DashDrawer> {
             _createDrawerItem(icon: Icons.settings_rounded, text: 'Settings'),
             _createDrawerItem(icon: Icons.logout, text: 'Logout'),
             ListTile(
-              title: Text('0.0.1'),
+              title: Text('0.0.2'),
               onTap: () {},
             ),
           ],

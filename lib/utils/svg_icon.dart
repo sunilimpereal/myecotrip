@@ -11,7 +11,8 @@ import '../../../main.dart';
 class SvgIcon extends StatefulWidget {
   final String path;
   final Color color;
-  const SvgIcon({Key? key, required this.color, required this.path}) : super(key: key);
+  double size;
+  SvgIcon({Key? key, required this.color, this.size = 24, required this.path}) : super(key: key);
   @override
   _SvgIconState createState() => _SvgIconState();
 }
@@ -52,13 +53,11 @@ class _SvgIconState extends State<SvgIcon> {
           //           color: widget.color,
           //         );
           //       })
-          return SvgPicture.asset('assets/icons/${widget.path}', color: widget.color,
-          height: 24,
-              placeholderBuilder: (context) {
+          return SvgPicture.asset('assets/icons/${widget.path}',
+              color: widget.color, height: widget.size, placeholderBuilder: (context) {
             return SvgPicture.asset(
               'assets/icons/Default.svg',
               color: widget.color,
-             
             );
           });
         });

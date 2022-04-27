@@ -9,7 +9,17 @@ import 'package:myecotrip/main/Trekking_Details_page/Widgets/app_bar.dart';
 import '../../../../main/Trekking_Details_page/Widgets/back_button.dart';
 
 class DashboardAppBar extends StatefulWidget {
-  const DashboardAppBar({Key? key}) : super(key: key);
+  Function onMenuTap;
+  ScrollController bodyScrollController;
+  bool minmised;
+  bool showtopPart;
+  DashboardAppBar(
+      {Key? key,
+      required this.bodyScrollController,
+      required this.minmised,
+      required this.showtopPart,
+      required this.onMenuTap})
+      : super(key: key);
 
   @override
   State<DashboardAppBar> createState() => _DashboardAppBarState();
@@ -52,11 +62,14 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
 
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       fit: StackFit.loose,
       children: [
-        Container(
-          height: Config().deviceHeight(context) * 0.18,
+        AnimatedContainer(
+          duration: Duration(seconds: 1),
+          curve: Curves.fastOutSlowIn,
+          height: Config().deviceHeight(context) * (widget.minmised ? 0.11 : 0.18),
           color: Colors.transparent,
           child: Column(
             children: [
@@ -64,19 +77,21 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
                 elevation: 10,
                 shadowColor: Colors.white.withOpacity(0.5),
                 color: Colors.green[50],
-                borderRadius:const  BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(0),
                   topRight: Radius.zero,
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
-                child: Container(
-                  height: Config().deviceHeight(context) * 0.165,
+                child: AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  curve: Curves.fastOutSlowIn,
+                  height: Config().deviceHeight(context) * (widget.minmised ? 0.10 : 0.165),
                   width: Config().deviceWidth(context),
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     children: [
-                      profile1(),
+                      !widget.showtopPart ? Container() : profile1(),
                     ],
                   ),
                 ),
@@ -96,7 +111,9 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
     return Container(
         child: Row(
       children: [
-        CustomIconButton(size: 36, onTap: () {}, iconData: Icons.sort),
+        CustomIconButton(size: 36, onTap: () {
+          widget.onMenuTap();
+        }, iconData: Icons.sort),
         SizedBox(
           width: 16,
         ),

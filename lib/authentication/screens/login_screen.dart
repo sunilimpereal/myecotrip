@@ -8,6 +8,7 @@ import 'package:myecotrip/authentication/screens/widgets/ECStreamButton.dart';
 import 'package:myecotrip/authentication/screens/widgets/EC_textfield.dart';
 import 'package:myecotrip/constants/config.dart';
 
+import '../../admin/admin_main.dart';
 import '../../main/navpage/main_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   FocusNode emailFocus = FocusNode();
+  TextEditingController mobileController = TextEditingController();
+  FocusNode mobileFocus = FocusNode();
   String emailError = "";
   TextEditingController passwordController = TextEditingController();
   FocusNode passwordFocus = FocusNode();
@@ -80,21 +83,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 8,
                       ),
-                      ECTExtField(
-                        controller: emailController,
-                        focusNode: emailFocus,
-                        heading: "email",
-                        icon: Icons.email,
-                        labelText: "email",
-                        obscureText: false,
-                        onChanged: loginBloc!.changeEmail,
-                        keyboardType: TextInputType.emailAddress,
-                        onTap: onTap,
-                        onfocus: emailFocus.hasFocus,
-                        stream: loginBloc.email,
-                        error: emailError,
-                        width: MediaQuery.of(context).size.width * 0.75,
-                      ),
+                      checkedValue
+                          ? ECTExtField(
+                              controller: mobileController,
+                              focusNode: mobileFocus,
+                              heading: "mobile",
+                              icon: Icons.email,
+                              labelText: "mobile",
+                              obscureText: false,
+                              onChanged: loginBloc!.changeMobile,
+                              keyboardType: TextInputType.number,
+                              onTap: onTap,
+                              onfocus: mobileFocus.hasFocus,
+                              stream: loginBloc.mobile,
+                              error: "",
+                              width: MediaQuery.of(context).size.width * 0.75,
+                            )
+                          : ECTExtField(
+                              controller: emailController,
+                              focusNode: emailFocus,
+                              heading: "email",
+                              icon: Icons.email,
+                              labelText: "email",
+                              obscureText: false,
+                              onChanged: loginBloc!.changeMobile,
+                              keyboardType: TextInputType.emailAddress,
+                              onTap: onTap,
+                              onfocus: emailFocus.hasFocus,
+                              stream: loginBloc.email,
+                              error: emailError,
+                              width: MediaQuery.of(context).size.width * 0.75,
+                            ),
                       SizedBox(
                         height: 8,
                       ),
@@ -118,34 +137,61 @@ class _LoginScreenState extends State<LoginScreen> {
                           stream: loginBloc.loginError,
                           builder: (context, snapshot) {
                             return ECStreamButton(
-                              formValidationStream: loginBloc.validateFormStream,
+                              formValidationStream: checkedValue
+                                  ? loginBloc.validateFormAdminStream
+                                  : loginBloc.validateFormStream,
                               submit: () async {
-                                if (validateForm()) {
+                                if (checkedValue?validateFormAdmin(): validateForm()) {
                                   AuthRepository authRepository = AuthRepository();
-                                  authRepository
-                                      .login(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                    context: context,
-                                  )
-                                      .then((value) {
-                                    log("final val $value");
-                                    Future.delayed(const Duration(milliseconds: 100))
-                                        .then((value1) {
-                                      if (value) {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                checkedValue ? AdminDashboard() : MainPage(),
-                                          ),
-                                        );
-                                      }
-                                      setState(() {
-                                        loginFailFlag = !value;
+                                  if (checkedValue) {
+                                    log("final val ");
+                                    authRepository
+                                        .adminLogin(
+                                      email: mobileController.text,
+                                      password: passwordController.text,
+                                      context: context,
+                                    )
+                                        .then((value) {
+                                      log("final val $value");
+                                      Future.delayed(const Duration(milliseconds: 100))
+                                          .then((value1) {
+                                        if (value) {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AdminApp()),
+                                          );
+                                        }
+                                        setState(() {
+                                          loginFailFlag = !value;
+                                        });
                                       });
                                     });
-                                  });
+                                  } else {
+                                    authRepository
+                                        .login(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      context: context,
+                                    )
+                                        .then((value) {
+                                      log("final val $value");
+                                      Future.delayed(const Duration(milliseconds: 100))
+                                          .then((value1) {
+                                        if (value) {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => MainPage(),
+                                            ),
+                                          );
+                                        }
+                                        setState(() {
+                                          loginFailFlag = !value;
+                                        });
+                                      });
+                                    });
+                                  }
                                 }
                               },
                               text: "Login",
@@ -228,6 +274,30 @@ class _LoginScreenState extends State<LoginScreen> {
         emailError = "";
       });
     }
+    // password validation
+    if (passwordController.text.isEmpty) {
+      flag = false;
+      passwordError = "Please enter password";
+    } else {
+      passwordError = "";
+    }
+    return flag;
+  }
+
+  bool validateFormAdmin() {
+    bool flag = true;
+    // bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    //     .hasMatch(emailController.text);
+    // if (!emailValid) {
+    //   flag = false;
+    //   setState(() {
+    //     emailError = "Enter Valid Email";
+    //   });
+    // } else {
+    //   setState(() {
+    //     emailError = "";
+    //   });
+    // }
     // password validation
     if (passwordController.text.isEmpty) {
       flag = false;

@@ -5,6 +5,7 @@ import 'package:myecotrip/admin/issue_ticket/screens/widgets/dropdownTextField.d
 import 'package:myecotrip/admin/issue_ticket/screens/widgets/dropdown_isstic.dart';
 import 'package:myecotrip/admin/reports/screens/report_slide.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
+import 'package:myecotrip/admin/ticket_scan/data/models/scanResponse.dart';
 import 'package:myecotrip/admin/ticket_scan/screen/widgets/ticket_person_card.dart';
 import 'package:myecotrip/authentication/data/bloc/login_bloc.dart';
 import 'package:myecotrip/authentication/screens/widgets/EC_textfield.dart';
@@ -13,6 +14,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../../constants/config.dart';
 import '../../../main/Trekking_Details_page/Widgets/back_button.dart';
+import '../../dashboard/screens/widgets/drawer.dart';
 
 class IssueTicketForm extends StatefulWidget {
   const IssueTicketForm({Key? key}) : super(key: key);
@@ -32,9 +34,9 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
   FocusNode trekFocus = FocusNode();
   TextEditingController slotController = TextEditingController();
   FocusNode slotFocus = FocusNode();
-    TextEditingController genderController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   FocusNode genderFocus = FocusNode();
-    TextEditingController typeController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
   FocusNode typeFocus = FocusNode();
   TextEditingController firstNameController = TextEditingController();
   FocusNode firstNameFocus = FocusNode();
@@ -54,40 +56,41 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
   List<String> genders = ["Male", "Female"];
   String? selectedType = null;
   String? selectedGender = null;
+    final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+         key: _key,
+        drawer: Drawer(child: DashDrawer()),
         body: SafeArea(
-      child: SlidingUpPanel(
-        isDraggable: true,
-        color: Colors.green[200]!,
-        controller: panelController,
-        borderRadius:
-            const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        minHeight: Config().deviceHeight(context) * 0.065,
-        maxHeight: MediaQuery.of(context).size.height * 0.55,
-        panel: panel(),
-        header: headerui(context),
-        body: Column(
-          children: [
-            CustomAppBar(
-              leading: CustomBackButton(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              title: const Text(
-                "Issue Ticket",
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-              ),
+          child: SlidingUpPanel(
+            isDraggable: true,
+            color: Colors.green[200]!,
+            controller: panelController,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            minHeight: Config().deviceHeight(context) * 0.15,
+            maxHeight: MediaQuery.of(context).size.height * 0.55,
+            panel: panel(),
+            header: headerui(context),
+            body: Column(
+              children: [
+                CustomAppBar(
+                  leading: CustomIconButton(size: 36, onTap: () {
+                    _key.currentState?.openDrawer();
+                  }, iconData: Icons.sort),
+                  title: const Text(
+                    "Issue Ticket",
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                  ),
+                ),
+                Container(
+                    height: Config().deviceHeight(context) * 0.8,
+                    child: SingleChildScrollView(child: form()))
+              ],
             ),
-            Container(
-                height: Config().deviceHeight(context) * 0.8,
-                child: SingleChildScrollView(child: form()))
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   Widget form() {
@@ -113,14 +116,14 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                   ),
                 ),
                 SizedBox(
-                  height: 8,
+                  height: 6,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     DropdownTextField(
                       width: Config().deviceWidth(context) * 0.56,
-                      options: ['madikere', 'bengaluru', 'dsadsdsa'],
+                      options: ['madikere', 'bengaluru'],
                       onSelected: (e) {
                         setState(() {
                           locationController.text = e;
@@ -144,14 +147,14 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                   ],
                 ),
                 SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     DropdownTextField(
                       width: Config().deviceWidth(context) * 0.46,
-                      options: ['madikere', 'bengaluru', 'dsadsdsa'],
+                      options: ['madikere', 'bengaluru'],
                       onSelected: (e) {
                         setState(() {
                           trekController.text = e;
@@ -175,7 +178,7 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                   ],
                 ),
                 SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -311,6 +314,16 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
   }
 
   Widget panel() {
+    Visitor visitor = Visitor(
+      tvtType: "Adult",
+      tvtFname: "Disnesh",
+      tvtLname: "Ram",
+      tvtEmail: "name@gmail.com",
+      tvtMobile: "6363865667",
+      tvtAge: "26",
+      tvtFees: "250",
+      tvtGender: "Male",
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -322,8 +335,8 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                 child: Row(
                   children: [
                     Text(
-                      "Members",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      "Visitors",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily: Nunito),
                     ),
                     SizedBox(
                       width: 8,
@@ -342,7 +355,7 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                               child: Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Text(
-                                  "3",
+                                  "2",
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -353,13 +366,19 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                 ),
               ),
             ),
-            TicketPersonCard(),
-            TicketPersonCard(),
+            TicketPersonCard(
+              visitor: visitor,
+              color: Colors.white,
+            ),
+            TicketPersonCard(
+              visitor: visitor,
+              color: Colors.white,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AdButton(
-                  icon: Icons.person_add,
+                  icon: Icons.confirmation_number_outlined,
                   onPressed: () {
                     Navigator.push(
                       context,

@@ -27,7 +27,7 @@ class Custom_AppBarState extends State<CustomAppBar> {
           children: [
             widget.leading ?? Container(),
             Container(
-                width: Config().deviceWidth(context) * 0.68,
+                width: Config().deviceWidth(context) * 0.66,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,

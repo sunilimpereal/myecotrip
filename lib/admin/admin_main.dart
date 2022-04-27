@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
+import 'package:myecotrip/admin/dashboard/screens/navbar.dart';
 import 'package:myecotrip/constants/themes/admin_theme.dart';
 
 class AdminApp extends StatelessWidget {
@@ -12,7 +13,7 @@ class AdminApp extends StatelessWidget {
       title: 'Ecotourism',
       debugShowCheckedModeBanner: false,
       theme: AdminTheme,
-      home: const AdminDashboard(),
+      home: const AdminMainPage(),
     );
   }
 }

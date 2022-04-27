@@ -46,7 +46,6 @@ class _DashCardState extends State<DashCard> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     CardHeight = Config().deviceHeight(context) * 0.2;
     CardWidth = Config().deviceWidth(context);
   }

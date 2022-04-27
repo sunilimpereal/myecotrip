@@ -1,14 +1,18 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
+import 'package:myecotrip/admin/ticket_scan/data/models/scanResponse.dart';
 import 'package:myecotrip/admin/ticket_scan/screen/widgets/ticket_person_card.dart';
 import 'package:myecotrip/constants/config.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Widgets/back_button.dart';
+import 'package:myecotrip/utils/svg_icon.dart';
 
 import '../../../main/Trekking_Details_page/Widgets/app_bar.dart';
 
 class ScanProcessScreen extends StatefulWidget {
-  const ScanProcessScreen({Key? key}) : super(key: key);
+  TicketModel ticketModel;
+  ScanProcessScreen({Key? key, required this.ticketModel}) : super(key: key);
 
   @override
   State<ScanProcessScreen> createState() => _ScanProcessScreenState();
@@ -29,7 +33,9 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                   children: [
                     CustomAppBar(
                       leading: CustomBackButton(
-                        onTap: () {  Navigator.pop(context);},
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                       ),
                       title: Container(
                         child: Text(
@@ -44,6 +50,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                         //title
                         firstBox(),
                         membersBox(),
+                        guideDetail(widget.ticketModel.guide),
                         natureGuide()
                       ],
                     )
@@ -58,7 +65,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AdButton(
-                        width: Config().deviceWidth(context)*0.5,
+                        width: Config().deviceWidth(context) * 0.5,
                         icon: Icons.close,
                         onPressed: () {
                           Navigator.pop(context);
@@ -67,7 +74,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                         color: Colors.red.shade400,
                       ),
                       AdButton(
-                        width: Config().deviceWidth(context)*0.5,
+                          width: Config().deviceWidth(context) * 0.5,
                           icon: Icons.check,
                           onPressed: () {
                             Navigator.pop(context);
@@ -103,7 +110,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                           width: 4,
                         ),
                         Text(
-                          "Kada View",
+                          widget.ticketModel.booking.trbTrekname,
                           style: TextStyle(fontSize: 24),
                         ),
                       ],
@@ -115,12 +122,16 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                     child: Row(
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             timeslotText(
-                                iconData: Icons.schedule_rounded, text: "Morning Slot 9:00 AM"),
+                                iconData: Icons.schedule_rounded,
+                                text: widget.ticketModel.slot.sltShift + ", Morning Slot"),
                             timeslotText(
-                                iconData: Icons.calendar_month_outlined,
-                                text: "April 12,2022 Tuesday"),
+                              iconData: Icons.calendar_month_outlined,
+                              text: DateFormat('EEE, MMM d, ' 'yy')
+                                  .format(widget.ticketModel.slot.sltTrekdate),
+                            ),
                           ],
                         ),
                       ],
@@ -151,7 +162,7 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                       width: 4,
                     ),
                     Text(
-                      "Members",
+                      "Visitors",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -160,8 +171,12 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
                   ],
                 ),
               ),
-              TicketPersonCard(),
-              TicketPersonCard(),
+              Column(
+                  children: widget.ticketModel.visitors
+                      .map((e) => TicketPersonCard(
+                            visitor: e,
+                          ))
+                      .toList())
             ],
           ),
         ),
@@ -287,6 +302,86 @@ class _ScanProcessScreenState extends State<ScanProcessScreen> {
             style: TextStyle(fontSize: 16),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget guideDetail(Guide guide) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Material(
+        color: Colors.white,
+        child: Container(
+          // height: Config().deviceHeight(context) * 0.35,
+          width: Config().deviceWidth(context),
+          child: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(8),
+                child: SvgIcon(
+                  color: Colors.green[800]!,
+                  path: 'guide_std.svg',
+                  size: 44,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Guide",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              guide.tgdFname,
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              guide.tgdMobile,
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

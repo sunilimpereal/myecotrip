@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myecotrip/admin/ticket_scan/data/models/scanResponse.dart';
 import 'package:myecotrip/constants/config.dart';
 
 class TicketPersonCard extends StatefulWidget {
-  const TicketPersonCard({Key? key}) : super(key: key);
+  Visitor visitor;
+  Color? color;
+   TicketPersonCard({Key? key,required this.visitor,this.color}) : super(key: key);
 
   @override
   State<TicketPersonCard> createState() => _TicketPersonCardState();
@@ -14,7 +17,7 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-          color: Colors.green.shade100.withOpacity(0.8),
+          color: widget.color??Colors.green.shade100.withOpacity(0.8),
           borderRadius: BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -39,7 +42,7 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
         height: 48,
         child: Center(
           child: Text(
-            "DI",
+             widget.visitor.tvtFname.substring(0,2).toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
@@ -56,14 +59,14 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Dinesh Sam",
+              widget.visitor.tvtFname,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
             ),
             SizedBox(
               height: 4,
             ),
             Text(
-              "+91902437382",
+              widget.visitor.tvtMobile,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
             )
           ],
@@ -87,7 +90,7 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
             width: 8,
           ),
           Text(
-            "Adult",
+            widget.visitor.tvtType,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           SizedBox(
@@ -111,7 +114,7 @@ class _TicketPersonCardState extends State<TicketPersonCard> {
       child: Column(
         children: [
           Text(
-            "28",
+            widget.visitor.tvtAge,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           Text(

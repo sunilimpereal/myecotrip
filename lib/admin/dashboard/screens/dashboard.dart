@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
@@ -43,6 +45,35 @@ class _AdminDashboardState extends State<AdminDashboard> {
       color2: Color(0xffE3E1B3),
     )
   ];
+  ScrollController bodyScrollController = ScrollController();
+  bool minisedAppbar = false;
+  bool showTopPart = true;
+  @override
+  void initState() {
+    bodyScrollController.addListener(() {
+      if (bodyScrollController.offset < 100) {
+        Future.delayed(Duration(milliseconds: 600)).then((value) {
+          setState(() {
+            showTopPart = true;
+          });
+        });
+      }
+
+      if (bodyScrollController.offset > 100) {
+        setState(() {
+          minisedAppbar = true;
+          //Future.delayed(Duration(seconds: 1)).then((value) {
+          showTopPart = false;
+          //  / });
+        });
+      } else {
+        setState(() {
+          minisedAppbar = false;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +88,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
               //body
               Stack(
                 children: [
-                  Container(
-                      padding: EdgeInsets.only(top: Config().deviceHeight(context) * 0.148),
+                  AnimatedContainer(
+                      duration: Duration(seconds: 1),
+                      curve: Curves.fastOutSlowIn,
+                      padding: EdgeInsets.only(
+                          top: Config().deviceHeight(context) * (minisedAppbar ? 0.05 : 0.138)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -66,51 +100,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           // Reportcard(),
                         ],
                       )),
-                  DashboardAppBar(),
+                  DashboardAppBar(
+                    bodyScrollController: bodyScrollController,
+                    minmised: minisedAppbar,
+                    showtopPart: showTopPart,
+                    onMenuTap: () {
+                     _key.currentState?.openDrawer();
+                    },
+                  ),
                 ],
               ),
-
-              // bottom buttons
-              // Positioned(
-              //   bottom: 0,
-              //   child: Container(
-              //     width: Config().deviceWidth(context),
-              //     color: Colors.white,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //       children: [
-              //         AdButton(
-              //           width: Config().deviceWidth(context) * 0.5,
-              //           icon: Icons.calendar_view_day_rounded,
-              //           color: Colors.white,
-              //           textColor: Colors.green,
-              //           onPressed: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => IssueTicketForm(),
-              //               ),
-              //             );
-              //           },
-              //           text: 'Ticket',
-              //         ),
-              //         AdButton(
-              //           width: Config().deviceWidth(context) * 0.5,
-              //           icon: Icons.qr_code,
-              //           onPressed: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => ScanScreen(),
-              //               ),
-              //             );
-              //           },
-              //           text: 'Scan',
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),
@@ -119,9 +118,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   Widget TrekDetails() {
-    return Container(
-      height: Config().deviceHeight(context) * 0.78,
+    return AnimatedContainer(
+      duration: Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+      height: Config().deviceHeight(context) * (minisedAppbar ? 0.8 : 0.76),
       child: SingleChildScrollView(
+        controller: bodyScrollController,
         dragStartBehavior: DragStartBehavior.start,
         physics: BouncingScrollPhysics(),
         child: Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myecotrip/admin/admin_main.dart';
 import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
 import 'package:myecotrip/constants/config.dart';
@@ -19,8 +20,8 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -29,7 +30,9 @@ class _PaymentState extends State<Payment> {
               children: [
                 CustomAppBar(
                   leading: CustomBackButton(
-                    onTap: () {Navigator.pop(context);},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                   ),
                   title: const Text(
                     "Payments",
@@ -189,12 +192,7 @@ class _PaymentState extends State<Payment> {
         AdButton(
           icon: Icons.check,
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AdminDashboard(),
-              ),
-            );
+           Navigator.pop(context);
           },
           text: "Confirm and Pay",
           color: Colors.green.shade700,

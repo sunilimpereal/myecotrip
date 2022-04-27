@@ -311,15 +311,15 @@ public class MainActivity extends FlutterActivity {
             // Bill Details Start
             mPrinter.setAlignmentLeft();
             mPrinter.printTextLine("Booking Details\n");
-            mPrinter.printTextLine("Booking Id    : " + bookingId + "\n");
-            mPrinter.printTextLine("No of tickets : " + noOfTickets + "\n");
-            mPrinter.printTextLine("Booking date  : " + bookingDate + "\n");
-            mPrinter.printTextLine("Trekking date : " + trekkingDate + "\n");
-            mPrinter.printTextLine("Timeslot      : " + timeSlot + "\n");
-            mPrinter.printTextLine("Total         : " +total  + "\n");
+            mPrinter.printTextLine("Booking Id   : " + bookingId + "\n");
+            mPrinter.printTextLine("No of tickets: " + noOfTickets + "\n");
+            mPrinter.printTextLine("Booking date : " + bookingDate + "\n");
+            mPrinter.printTextLine("Trekking date: " + trekkingDate + "\n");
+            mPrinter.printTextLine("Timeslot     : " + timeSlot + "\n");
+            mPrinter.printTextLine("Total        : " +total  + "\n");
             mPrinter.printLineFeed();
             mPrinter.setBoldOn();
-            mPrinter.printTextLine( "Trkkers Details\n");
+            mPrinter.printTextLine( "Trekkers Details\n");
             mPrinter.setBoldOff();
             mPrinter.setAlignmentCenter();
             mPrinter.setCharRightSpacing(3);
@@ -334,13 +334,14 @@ public class MainActivity extends FlutterActivity {
             mPrinter.setAlignmentCenter();
             PrintColumnParam colm1  = new PrintColumnParam((String[]) names.toArray(new String[0]),50);
             PrintColumnParam colm2 = new PrintColumnParam( (String[])age.toArray(new String[0]),25);
-            PrintColumnParam colm3=  new PrintColumnParam((String[]) sex.toArray(new String[0]),25,Layout.Alignment.ALIGN_OPPOSITE);
+            PrintColumnParam colm3=  new PrintColumnParam((String[]) sex.toArray(new String[0]),25);
             mPrinter.PrintTable(colm1,colm2,colm3);
             mPrinter.pixelLineFeed(50);
             mPrinter.setAlignmentLeft();
+            mPrinter.printLineFeed();
             mPrinter.printTextLine("Trail Details\n");
             mPrinter.printTextLine("Name            : " + trailName + "\n");
-            mPrinter.printTextLine("Strarting point : " + noOfTickets + "\n");
+            mPrinter.printTextLine("Starting point  : " + noOfTickets + "\n");
             mPrinter.printTextLine("End point       : " + bookingDate + "\n");
             mPrinter.printTextLine("Contact No      : " + trekkingDate + "\n");
             mPrinter.pixelLineFeed(50);
@@ -355,7 +356,7 @@ public class MainActivity extends FlutterActivity {
 
         }else{
             System.out.println("Printing Summary");
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ticketlogo);
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ticketlogo1);
             Bitmap logo = BitmapFactory.decodeResource(getResources(), R.mipmap.logo1);
             mPrinter.setAlignmentCenter();
             mPrinter.setCharRightSpacing(10);

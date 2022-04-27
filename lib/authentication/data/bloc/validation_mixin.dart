@@ -26,4 +26,12 @@ class ValidationMixin {
       sink1.add(password);
     }
   });
+   final validatorMobile =
+      StreamTransformer<String, String>.fromHandlers(handleData: (mobile, sink1) {
+    if (mobile.isEmpty) {
+      // sink1.addError('Please Enter Valid password');
+    } else {
+      sink1.add(mobile);
+    }
+  });
 }
