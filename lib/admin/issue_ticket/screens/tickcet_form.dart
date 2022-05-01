@@ -56,32 +56,37 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
   List<String> genders = ["Male", "Female"];
   String? selectedType = null;
   String? selectedGender = null;
-    final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         key: _key,
+        key: _key,
         drawer: Drawer(child: DashDrawer()),
         body: SafeArea(
           child: SlidingUpPanel(
             isDraggable: true,
-            color: Colors.green[200]!,
+            color: Colors.white,
             controller: panelController,
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             minHeight: Config().deviceHeight(context) * 0.15,
-            maxHeight: MediaQuery.of(context).size.height * 0.55,
+            maxHeight: MediaQuery.of(context).size.height * 0.88,
+            snapPoint: 0.5,
             panel: panel(),
             header: headerui(context),
             body: Column(
               children: [
                 CustomAppBar(
-                  leading: CustomIconButton(size: 36, onTap: () {
-                    _key.currentState?.openDrawer();
-                  }, iconData: Icons.sort),
+                  leading: CustomIconButton(
+                      size: 36,
+                      onTap: () {
+                        _key.currentState?.openDrawer();
+                      },
+                      iconData: Icons.sort),
                   title: const Text(
                     "Issue Ticket",
-                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
                   ),
                 ),
                 Container(
@@ -110,7 +115,8 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                     children: const [
                       Text(
                         "Add Visitor",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.normal),
                       )
                     ],
                   ),
@@ -140,7 +146,10 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
                       child: Padding(
                         padding: const EdgeInsets.all(13.0),
                         child: Row(
-                          children: [Icon(Icons.calendar_month_outlined), Text("20/4/2022")],
+                          children: [
+                            Icon(Icons.calendar_month_outlined),
+                            Text("20/4/2022")
+                          ],
                         ),
                       ),
                     ),
@@ -324,76 +333,100 @@ class _IssueTicketFormState extends State<IssueTicketForm> {
       tvtFees: "250",
       tvtGender: "Male",
     );
+    Visitor visitor1 = Visitor(
+      tvtType: "Adult",
+      tvtFname: "Raj",
+      tvtLname: "Ram",
+      tvtEmail: "name@gmail.com",
+      tvtMobile: "9363865667",
+      tvtAge: "16",
+      tvtFees: "150",
+      tvtGender: "Male",
+    );
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: Row(
-                  children: [
-                    Text(
-                      "Visitors",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily: Nunito),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Material(
-                        color: Colors.green[100],
-                        borderRadius: BorderRadius.circular(30),
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          child: Center(
-                            child: Ink(
-                                child: InkWell(
-                              splashColor: Colors.green,
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Text(
-                                  "2",
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            )),
-                          ),
-                        ))
-                  ],
-                ),
-              ),
-            ),
-            TicketPersonCard(
-              visitor: visitor,
-              color: Colors.white,
-            ),
-            TicketPersonCard(
-              visitor: visitor,
-              color: Colors.white,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Stack(
+        children: [
+          Container(
+            child: Column(
               children: [
-                AdButton(
-                  icon: Icons.confirmation_number_outlined,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Payment(),
-                      ),
-                    );
-                  },
-                  text: "Issue Ticket",
-                  color: Colors.green.shade700,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Text(
+                          "Visitors",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: Nunito),
+                        ),
+                        SizedBox(
+                          width: Config().deviceWidth(context) * 0.04,
+                        ),
+                        Material(
+                            color: Colors.grey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              child: Center(
+                                child: Ink(
+                                    child: InkWell(
+                                  splashColor: Colors.grey,
+                                  onTap: () {},
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(3.0),
+                                    child: Text(
+                                      "3",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ),
+                                )),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
                 ),
+                TicketPersonCard(
+                  visitor: visitor,
+                ),
+                TicketPersonCard(
+                  visitor: visitor,
+                ),
+                TicketPersonCard(
+                  visitor: visitor1,
+                ),
+                SizedBox(
+                  height: Config().deviceHeight(context) * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AdButton(
+                      icon: Icons.confirmation_number_outlined,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Payment(),
+                          ),
+                        );
+                      },
+                      text: "Issue Ticket",
+                      color: Colors.green.shade700,
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+       
+        ],
       ),
     );
   }

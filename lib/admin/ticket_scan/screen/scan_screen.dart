@@ -7,6 +7,8 @@ import 'package:myecotrip/constants/config.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Widgets/app_bar.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Widgets/back_button.dart';
 
+import '../../dashboard/screens/widgets/drawer.dart';
+
 // scan screen 1
 class ScanScreen extends StatefulWidget {
   const ScanScreen({Key? key}) : super(key: key);
@@ -25,15 +27,23 @@ class _ScanScreenState extends State<ScanScreen> {
       qrCode = "";
     });
   }
-
+ final GlobalKey<ScaffoldState> _key = GlobalKey(); //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _key,
+          drawer: Drawer(child: DashDrawer()),
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(
             children: [
               CustomAppBar(
+                  leading: CustomIconButton(
+                      size: 36,
+                      onTap: () {
+                        _key.currentState?.openDrawer();
+                      },
+                      iconData: Icons.sort),
                 title: Container(
                   child: Text(
                     "Scan",
@@ -83,7 +93,7 @@ class _ScanScreenState extends State<ScanScreen> {
                                     },
                                     child: Container(
                                       padding:const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(10),
                                         ),

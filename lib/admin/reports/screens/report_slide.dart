@@ -7,18 +7,22 @@ import 'package:myecotrip/admin/reports/widgets/DateTile.dart';
 import 'package:myecotrip/admin/reports/widgets/dropdown.dart';
 import 'package:myecotrip/constants/config.dart';
 
+import '../data/bloc/reports_bloc.dart';
+
 class ReportFilter extends StatefulWidget {
   Function ontapFilter;
   Function ontapSort;
   Function onclose;
   int i;
+  ReportsBloc reportBloc;
   ReportFilter({
     Key? key,
     required this.ontapFilter,
     required this.ontapSort,
     required this.onclose,
     required this.i,
-  }) : super(key: key);
+    required this.reportBloc
+}) : super(key: key);
 
   @override
   State<ReportFilter> createState() => ReportFilterState();
@@ -44,10 +48,11 @@ class ReportFilterState extends State<ReportFilter> with SingleTickerProviderSta
               child: TabBar(
                 indicatorColor: Colors.green,
                 labelColor: Colors.green[800],
+                unselectedLabelColor: Colors.green[800],
                 controller: _controller,
                 padding: EdgeInsets.all(0),
                 onTap: (int i) {
-                  log("tits");
+                  log("ti");
                   widget.ontapFilter();
 
                 },
@@ -73,8 +78,8 @@ class ReportFilterState extends State<ReportFilter> with SingleTickerProviderSta
               height: Config().deviceHeight(context) * 0.4,
               child: TabBarView(
                 controller: _controller,
-                children: const [
-                  ReportsFilter(),
+                children:  [
+                  ReportsFilter(reportsBloc: widget.reportBloc,),
                   ReportSort(),
                 ],
               ),
@@ -84,32 +89,6 @@ class ReportFilterState extends State<ReportFilter> with SingleTickerProviderSta
       ),
     );
 
-    //  Padding(
-    //   padding: const EdgeInsets.all(8.0),
-    //   child: Material(
-    //     color: Colors.transparent,
-    //     child: Column(
-    //       children: [
-    //         SizedBox(
-    //           height: 10,
-    //         ),
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             sliderButton("Filter", ontap: widget.ontapFilter, onclose: widget.onclose),
-    //             sliderButton("Sort", ontap: widget.ontapSort, onclose: widget.onclose),
-    //           ],
-    //         ),
-    //         if (widget.i == 1)
-    //           ReportsFilter()
-    //         else if (widget.i == 2)
-    //           ReportSort()
-    //         else
-    //           ReportsFilter()
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
   sliderButton(String name, {Function()? ontap, Function()? onclose}) {

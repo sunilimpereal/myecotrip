@@ -24,7 +24,7 @@ class _DateTileState extends State<DateTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(0.0),
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,13 +49,13 @@ class _DateTileState extends State<DateTile> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
                       child: Row(
                         children: [
                           Icon(Icons.calendar_month_outlined),

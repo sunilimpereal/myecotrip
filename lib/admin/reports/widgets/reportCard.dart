@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:myecotrip/admin/reports/data/models/trekBookings_model.dart';
 import 'package:myecotrip/constants/config.dart';
 
 class ReportCard extends StatefulWidget {
-  const ReportCard({Key? key}) : super(key: key);
+  TrekBookingModel trekBookingModel;
+  ReportCard({Key? key,required this.trekBookingModel}) : super(key: key);
 
   @override
   State<ReportCard> createState() => _ReportCardState();
@@ -69,7 +72,7 @@ class _ReportCardState extends State<ReportCard> {
                 color: Colors.green,
               )),
           Container(
-            width: CardWidth * 0.63,
+            width: CardWidth * 0.65,
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
@@ -78,10 +81,10 @@ class _ReportCardState extends State<ReportCard> {
                   child: Row(
                     children: [
                       Text(
-                        "1234567890",
+                        widget.trekBookingModel.trkPermit,
                         style: TextStyle(
                           color: Colors.green[900],
-                          fontSize: 18,
+                          fontSize: 14,
                         ),
                       ),
                     ],
@@ -93,7 +96,7 @@ class _ReportCardState extends State<ReportCard> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Makalidurga",
+                        widget.trekBookingModel.trbTrekname,
                         style: TextStyle(
                           color: Colors.green[900],
                           fontFamily: Roboto,
@@ -112,7 +115,7 @@ class _ReportCardState extends State<ReportCard> {
                         width: 4,
                       ),
                       Text(
-                        "Bengaluru",
+                          widget.trekBookingModel.trbTreklocation,
                         style: TextStyle(
                           color: Colors.green[900],
                           fontWeight: FontWeight.bold,
@@ -127,7 +130,7 @@ class _ReportCardState extends State<ReportCard> {
                   child: Row(
                     children: [
                       Text(
-                        "13:30, 12 May 2022",
+                        DateFormat('EEEE, d MMM, yyyy').format(widget.trekBookingModel.trbBookdate),
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: Roboto,
@@ -141,12 +144,12 @@ class _ReportCardState extends State<ReportCard> {
             ),
           ),
           Container(
-            width: Config().deviceWidth(context) * 0.2,
+            width: Config().deviceWidth(context) * 0.15,
             child: Container(
               child: Column(
                 children: [
                   Text(
-                    "3",
+                    widget.trekBookingModel.trbVisitors,
                     style: TextStyle(
                       fontSize: 24,
                       color: Colors.green[900],
@@ -194,7 +197,7 @@ class _ReportCardState extends State<ReportCard> {
                   child: Row(
                     children: [
                       Text(
-                        "1234567890",
+                        widget.trekBookingModel.trkPayid,
                         style: TextStyle(
                           color: Colors.green[900],
                           fontSize: 16,
@@ -209,7 +212,7 @@ class _ReportCardState extends State<ReportCard> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    "13:30, 12 May 2022",
+                    DateFormat('EEEE, d MMM, yyyy').format(widget.trekBookingModel.trbBookdate),
                     style: TextStyle(
                       color: Colors.grey[700]!,
                       fontWeight: FontWeight.bold,

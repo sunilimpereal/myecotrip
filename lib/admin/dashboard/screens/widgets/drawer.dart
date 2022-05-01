@@ -36,7 +36,7 @@ class _DashDrawerState extends State<DashDrawer> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Reports(),
+                      builder: (context) => ReportsScreen(),
                     ),
                   );
                 }),

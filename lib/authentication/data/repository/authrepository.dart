@@ -47,8 +47,8 @@ class AuthRepository {
     };
     try {
       LoginRequestModel loginRequestModel = LoginRequestModel(email: email, pass: password);
-      final response = await  http.post(Uri.parse("https://karnatakaecotourism.com/api/tmngr/token"),
-          body: loginRequestModelToJson(loginRequestModel), headers: postheaders ?? postheaders);
+      final response = await http.post(Uri.parse("https://karnatakaecotourism.com/api/tmngr/token"),
+          body: loginRequestModelToJson(loginRequestModel), headers: postheaders);
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoginResponseModel loginResponseModel = loginResponseModelFromJson(response.body);
         sharedPrefs.setUserDetails(
