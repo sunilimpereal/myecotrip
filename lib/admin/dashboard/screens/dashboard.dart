@@ -4,11 +4,14 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:myecotrip/admin/dashboard/data/cardModel.dart';
+import 'package:myecotrip/admin/dashboard/data/dashboardRepository.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/adbutton.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/dashboardAppBar.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/dashboard_card.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/dashcard.dart';
 import 'package:myecotrip/admin/dashboard/screens/widgets/drawer.dart';
+import 'package:myecotrip/admin/issue_ticket/data/repository/ticketDoemRepository.dart';
 import 'package:myecotrip/admin/issue_ticket/screens/select_landscape.dart';
 import 'package:myecotrip/admin/issue_ticket/screens/tickcet_form.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
@@ -16,6 +19,9 @@ import 'package:myecotrip/admin/ticket_scan/screen/scan_screen.dart';
 import 'package:myecotrip/constants/config.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Widgets/app_bar.dart';
 import 'package:myecotrip/main/Trekking_Details_page/Widgets/back_button.dart';
+
+import '../../issue_ticket/data/models/landScapeMode.dart';
+import '../../issue_ticket/data/models/trekinfoModel.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -48,8 +54,29 @@ class _AdminDashboardState extends State<AdminDashboard> {
   ScrollController bodyScrollController = ScrollController();
   bool minisedAppbar = false;
   bool showTopPart = true;
+  List<CardDataModel> cardDataList = [];
+  DateTime selectedDate = DateTime.now();
+  bool loading = false;
+  getCardList() async {
+    setState(() {
+      loading = true;
+    });
+    List<CardDataModel> cardDataListT = await DashboardRepository().getCardData(
+      context: context,
+      date: selectedDate,
+    );
+    setState(() {
+      loading = false;
+      cardDataList = cardDataListT;
+    });
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      print("WidgetsBinding");
+      getCardList();
+    });
     bodyScrollController.addListener(() {
       if (bodyScrollController.offset < 100) {
         Future.delayed(Duration(milliseconds: 600)).then((value) {
@@ -104,8 +131,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     bodyScrollController: bodyScrollController,
                     minmised: minisedAppbar,
                     showtopPart: showTopPart,
+                    selectedDate: selectedDate,
+                    changeDate: (date) {
+                      setState(() {
+                        selectedDate = date;
+                        log(date.toIso8601String());
+                        getCardList();
+                      });
+                    },
                     onMenuTap: () {
-                     _key.currentState?.openDrawer();
+                      _key.currentState?.openDrawer();
                     },
                   ),
                 ],
@@ -128,43 +163,21 @@ class _AdminDashboardState extends State<AdminDashboard> {
         physics: BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 80.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DashCard(
-                colors: colors[0],
-                location: 'Bengaluru',
-                visitors: '15',
-                total: '30',
-                slot: '6:30 AM',
-                name: 'Makalidurga',
-              ),
-              DashCard(
-                colors: colors[1],
-                location: 'Bengaluru',
-                visitors: '15',
-                total: '30',
-                slot: '6:00 AM',
-                name: 'Kaiwara Betta',
-              ),
-              DashCard(
-                colors: colors[2],
-                location: 'Bengaluru',
-                visitors: '15',
-                total: '30',
-                slot: '6:30 AM',
-                name: 'Skandagiri',
-              ),
-              DashCard(
-                colors: colors[3],
-                location: 'Bengaluru',
-                visitors: '15',
-                total: '30',
-                slot: '6:30 AM',
-                name: 'Madikere',
-              ),
-            ],
-          ),
+          child: loading
+              ? Column(
+                  children: [LoadingDashboardCard(colors: colors[0])],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: cardDataList
+                      .map(
+                        (e) => DashCard(
+                          colors: colors[cardDataList.indexOf(e)],
+                          cardDataModel: e,
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
       ),
     );

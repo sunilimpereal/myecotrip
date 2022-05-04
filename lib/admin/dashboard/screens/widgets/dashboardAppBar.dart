@@ -13,11 +13,15 @@ class DashboardAppBar extends StatefulWidget {
   ScrollController bodyScrollController;
   bool minmised;
   bool showtopPart;
+  DateTime selectedDate;
+  Function(DateTime) changeDate;
   DashboardAppBar(
       {Key? key,
       required this.bodyScrollController,
       required this.minmised,
       required this.showtopPart,
+      required this.selectedDate,
+      required this.changeDate,
       required this.onMenuTap})
       : super(key: key);
 
@@ -40,6 +44,7 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
   ontap(DateTime a) {
     setState(() {
       selectedDate = a;
+      widget.changeDate(a);
     });
   }
 
@@ -50,10 +55,10 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       double onePos = scrollController.position.maxScrollExtent / dates.length;
-      Future.delayed(Duration(seconds: 0)).then((value) {
+      if (dates.indexOf(selectedDate) > 4) {
         scrollController.animateTo((onePos * (dates.indexOf(selectedDate) + 2.2)),
             duration: Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
-      });
+      }
     });
     dates = getDates();
 
@@ -62,7 +67,6 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       fit: StackFit.loose,
       children: [
@@ -111,9 +115,12 @@ class _DashboardAppBarState extends State<DashboardAppBar> {
     return Container(
         child: Row(
       children: [
-        CustomIconButton(size: 36, onTap: () {
-          widget.onMenuTap();
-        }, iconData: Icons.sort),
+        CustomIconButton(
+            size: 36,
+            onTap: () {
+              widget.onMenuTap();
+            },
+            iconData: Icons.sort),
         SizedBox(
           width: 16,
         ),

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
 import 'package:myecotrip/admin/issue_ticket/screens/tickcet_form.dart';
 import 'package:myecotrip/constants/config.dart';
@@ -64,47 +67,56 @@ class _AdminMainPageState extends State<AdminMainPage> {
             ),
             Positioned(
               bottom: 0,
-              child: Stack(
-                children: [
-                  ClipPath(
-                    clipper: ClipPathClass(),
-                    child: Container(
-                      height: 65,
-                      width: Config().deviceWidth(context),
-                      color: Colors.black,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 8,
-                    child: Container(
-                      width: Config().deviceWidth(context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          icon(
-                            icon: 'scan',
-                            selected: selected,
-                            onSelected: onSelected,
-                            name: 'Scan',
-                          ),
-                          icon(
-                            icon: 'home-filled',
-                            selected: selected,
-                            onSelected: onSelected,
-                            name: 'Home',
-                          ),
-                          icon(
-                            icon: 'tickets',
-                            selected: selected,
-                            onSelected: onSelected,
-                            name: 'Ticket',
-                          ),
-                        ],
+              child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+                log("keyboard ${isKeyboardVisible}");
+                if (WidgetsBinding.instance!.window.viewInsets.bottom > 0.0) {
+                  // Keyboard is visible.
+                  return Container();
+                } else {
+                  // Keyboard is not visible.
+                  return Stack(
+                    children: [
+                      ClipPath(
+                        clipper: ClipPathClass(),
+                        child: Container(
+                          height: 65,
+                          width: Config().deviceWidth(context),
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
+                      Positioned(
+                        bottom: 8,
+                        child: Container(
+                          width: Config().deviceWidth(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              icon(
+                                icon: 'scan',
+                                selected: selected,
+                                onSelected: onSelected,
+                                name: 'Scan',
+                              ),
+                              icon(
+                                icon: 'home-filled',
+                                selected: selected,
+                                onSelected: onSelected,
+                                name: 'Home',
+                              ),
+                              icon(
+                                icon: 'tickets',
+                                selected: selected,
+                                onSelected: onSelected,
+                                name: 'Ticket',
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                }
+              }),
             ),
           ],
         ),

@@ -27,23 +27,34 @@ class _ScanScreenState extends State<ScanScreen> {
       qrCode = "";
     });
   }
- final GlobalKey<ScaffoldState> _key = GlobalKey(); //
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR).then((value) {
+        qrCodeScan(context: context, qrCode1: cleanQr(value.trim()), clear: clear);
+      });
+    });
+    super.initState();
+  }
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: _key,
-          drawer: Drawer(child: DashDrawer()),
+        drawer: Drawer(child: DashDrawer()),
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(
             children: [
               CustomAppBar(
-                  leading: CustomIconButton(
-                      size: 36,
-                      onTap: () {
-                        _key.currentState?.openDrawer();
-                      },
-                      iconData: Icons.sort),
+                leading: CustomIconButton(
+                    size: 36,
+                    onTap: () {
+                      _key.currentState?.openDrawer();
+                    },
+                    iconData: Icons.sort),
                 title: Container(
                   child: Text(
                     "Scan",
@@ -84,6 +95,14 @@ class _ScanScreenState extends State<ScanScreen> {
                                   child: InkWell(
                                     splashColor: Colors.green,
                                     onTap: () {
+                                      FlutterBarcodeScanner.scanBarcode(
+                                              '#ff6666', 'Cancel', true, ScanMode.QR)
+                                          .then((value) {
+                                        qrCodeScan(
+                                            context: context,
+                                            qrCode1: cleanQr(value.trim()),
+                                            clear: clear);
+                                      });
                                       // Navigator.push(
                                       //   context,
                                       //   MaterialPageRoute(
@@ -92,7 +111,7 @@ class _ScanScreenState extends State<ScanScreen> {
                                       // );
                                     },
                                     child: Container(
-                                      padding:const EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(10),

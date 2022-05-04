@@ -72,8 +72,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Ecotourism',
       debugShowCheckedModeBanner: false,
       theme: MainTheme,
-      //home: const AuthenticationScreen(),
-      home: const AdminApp(),
+      //  home: const AuthenticationScreen(),
+         home: const AdminApp(),
     );
   }
 }

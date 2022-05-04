@@ -67,7 +67,7 @@ ThemeData get AdminTheme {
       colorScheme: ColorScheme(
           primary: primary,
           primaryVariant: primary.withOpacity(0.5),
-          secondary: secondary,
+          secondary: secondary.withOpacity(0.4),
           secondaryVariant: secondary.withOpacity(0.5),
           surface: primary,
           background: backGroundSecondary,

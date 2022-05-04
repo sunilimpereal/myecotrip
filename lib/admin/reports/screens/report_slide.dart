@@ -15,14 +15,14 @@ class ReportFilter extends StatefulWidget {
   Function onclose;
   int i;
   ReportsBloc reportBloc;
-  ReportFilter({
-    Key? key,
-    required this.ontapFilter,
-    required this.ontapSort,
-    required this.onclose,
-    required this.i,
-    required this.reportBloc
-}) : super(key: key);
+  ReportFilter(
+      {Key? key,
+      required this.ontapFilter,
+      required this.ontapSort,
+      required this.onclose,
+      required this.i,
+      required this.reportBloc})
+      : super(key: key);
 
   @override
   State<ReportFilter> createState() => ReportFilterState();
@@ -54,7 +54,6 @@ class ReportFilterState extends State<ReportFilter> with SingleTickerProviderSta
                 onTap: (int i) {
                   log("ti");
                   widget.ontapFilter();
-
                 },
                 tabs: [
                   Tab(
@@ -78,8 +77,10 @@ class ReportFilterState extends State<ReportFilter> with SingleTickerProviderSta
               height: Config().deviceHeight(context) * 0.4,
               child: TabBarView(
                 controller: _controller,
-                children:  [
-                  ReportsFilter(reportsBloc: widget.reportBloc,),
+                children: [
+                  ReportsFilter(
+                    reportsBloc: widget.reportBloc,
+                  ),
                   ReportSort(),
                 ],
               ),
@@ -88,7 +89,6 @@ class ReportFilterState extends State<ReportFilter> with SingleTickerProviderSta
         ),
       ),
     );
-
   }
 
   sliderButton(String name, {Function()? ontap, Function()? onclose}) {

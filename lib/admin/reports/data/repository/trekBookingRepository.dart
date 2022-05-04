@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:myecotrip/admin/issue_ticket/data/models/landScapeMode.dart';
+import 'package:myecotrip/admin/issue_ticket/data/repository/ticketDoemRepository.dart';
 import 'package:myecotrip/admin/reports/data/models/trekBookings_model.dart';
+import 'package:myecotrip/main.dart';
 
 import '../../../../constants/config.dart';
 import '../../../../repository/repository.dart';
@@ -12,12 +15,16 @@ class TrekBookingRepository {
   Future<List<TrekBookingModel>> getTrekBookingsList(
       {required BuildContext context,
       required DateTime startDate,
-      required DateTime endDate}) async {
+      required DateTime endDate,
+      required String type,
+      }) async {
     String adminId = ""; // TODO Admin ID
     try {
+      List<LandScapeModel> landScapeList = await TicketFromRepository().getlandscapeList(context: context);
+      String trekId = landScapeList[0].trkId;
       final response = await API.get(
           url:
-              'trekBookingsSelectAll/0/10000/Active/Booking/${getFormatedDate(startDate)}/${getFormatedDate(endDate)}/TRK128/ADM10',
+              'trekBookingsSelectAll/0/10000/${type}/Booking/${getFormatedDate(startDate)}/${getFormatedDate(endDate)}/$trekId/${sharedPref.uuid}',
           apiRoot: API_TMNGR,
           context: context);
       if (response.statusCode == 201) {
@@ -29,7 +36,7 @@ class TrekBookingRepository {
       }
     } catch (e) {
       showToast(
-        'Invalid Ticket',
+        'No records found',
         context: context,
         animation: StyledToastAnimation.scale,
         reverseAnimation: StyledToastAnimation.fade,

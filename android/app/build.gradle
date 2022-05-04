@@ -36,9 +36,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.ecotrip.myecotrip"
-        // minSdkVersion 21
+        minSdkVersion 19
+        multiDexEnabled true
         // targetSdkVersion 29
-        minSdkVersion flutter.minSdkVersion
+        //minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:myecotrip/admin/dashboard/screens/dashboard.dart';
 import 'package:myecotrip/admin/dashboard/screens/navbar.dart';
 import 'package:myecotrip/constants/themes/admin_theme.dart';
@@ -13,7 +14,9 @@ class AdminApp extends StatelessWidget {
       title: 'Ecotourism',
       debugShowCheckedModeBanner: false,
       theme: AdminTheme,
-      home: const AdminMainPage(),
+      home: const KeyboardVisibilityProvider(
+        child: AdminMainPage(),
+      ),
     );
   }
 }

@@ -10,14 +10,13 @@ class DropdownTextField extends StatefulWidget {
   TextEditingController controller;
   double? width;
   bool searchable;
-  DropdownTextField({
-    required this.options,
-    required this.onSelected,
-    required this.labelText,
-    required this.controller,
-    this.width,
-    this.searchable = true
-  });
+  DropdownTextField(
+      {required this.options,
+      required this.onSelected,
+      required this.labelText,
+      required this.controller,
+      this.width,
+      this.searchable = true});
   @override
   _DropdownTextFieldState createState() => _DropdownTextFieldState();
 }
@@ -28,16 +27,21 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
   late OverlayEntry _overlayEntry;
 
   final LayerLink _layerLink = LayerLink();
+  getHeight() {
+    if (widget.options.length < 4) {
+      return Config().deviceHeight(context) * 0.08 * widget.options.length;
+    } else {
+      Config().deviceHeight(context) * 0.3;
+    }
+  }
 
   @override
   void initState() {
     widget.controller.addListener(() {
       setState(() {
-        if(widget.searchable){
-        _overlayEntry.markNeedsBuild();
-        }else{
-
-        }
+        if (widget.searchable) {
+          _overlayEntry.markNeedsBuild();
+        } else {}
       });
     });
     _focusNode.addListener(() {
@@ -64,12 +68,13 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
                 child: Material(
                   elevation: 4.0,
                   child: Container(
-                    height: Config().deviceHeight(context) * 0.3,
+                    height: getHeight(),
                     child: ListView(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       children: widget.options
-                          .where((element) => element.startsWith(widget.searchable? widget.controller.text:""))
+                          .where((element) =>
+                              element.startsWith(widget.searchable ? widget.controller.text : ""))
                           .map((e) {
                         return ListTile(
                           title: Text(
@@ -79,8 +84,7 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
                           onTap: () {
                             widget.onSelected(e);
                             setState(() {
-                          _focusNode.unfocus();
-
+                              _focusNode.unfocus();
                             });
                           },
                         );
@@ -99,7 +103,7 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
       child: Container(
         width: widget.width,
         child: Material(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(8.0),
           child: TextFormField(
             focusNode: this._focusNode,
@@ -107,12 +111,12 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
             readOnly: !widget.searchable,
             style: TextStyle(
               fontSize: 14,
-              
               fontFamily: Nunito,
               color: Theme.of(context).textTheme.headline1!.color,
               fontWeight: FontWeight.w700,
             ),
-            decoration: InputDecoration(labelText: widget.labelText),
+            decoration:
+                InputDecoration(labelText: widget.labelText == "" ? null : widget.labelText),
           ),
         ),
       ),

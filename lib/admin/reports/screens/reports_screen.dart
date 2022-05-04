@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/reports/data/bloc/reports_bloc.dart';
@@ -57,7 +59,7 @@ class ReportsState extends State<Reports> {
       borderRadius:
           const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
       minHeight: Config().deviceHeight(context) * 0.06,
-      maxHeight: MediaQuery.of(context).size.height * 0.55,
+      maxHeight: MediaQuery.of(context).size.height * 0.7,
       panel: ReportFilter(
         onclose: () {
           setState(() {
@@ -115,6 +117,7 @@ class ReportsState extends State<Reports> {
                       child: StreamBuilder<List<TrekBookingModel>>(
                           stream: reportsBloc.ticketReportListStream,
                           builder: (context, snapshot) {
+                            log("updated screen");
                             if (!snapshot.hasData) {
                               return CircularProgressIndicator();
                             }

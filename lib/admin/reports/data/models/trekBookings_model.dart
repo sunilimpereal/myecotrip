@@ -79,9 +79,9 @@ class TrekBookingModel {
         trbCreatedAt: DateTime.parse(json["trb_createdAt"]),
         trbUpdatedAt: DateTime.parse(json["trb_updatedAt"]),
         sltShift: json["slt_shift"],
-        trkPermit: json["trk_permit"],
-        trkPayid: json["trk_payid"],
-        trkOrderid: json["trk_orderid"],
+        trkPermit: json["trk_permit"]??'',
+        trkPayid: json["trk_payid"]??'',
+        trkOrderid: json["trk_orderid"]??'',
       );
 
   Map<String, dynamic> toJson() => {

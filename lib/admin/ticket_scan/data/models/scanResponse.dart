@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../../../issue_ticket/data/models/trekinfoModel.dart';
+
 TicketModel ticketModelFromJson(String str) => TicketModel.fromJson(json.decode(str));
 
 String ticketModelToJson(TicketModel data) => json.encode(data.toJson());
@@ -235,54 +237,6 @@ class Permit {
       };
 }
 
-class Slot {
-  Slot({
-    required this.sltId,
-    required this.sltTrekid,
-    required this.sltTrekdate,
-    required this.sltShift,
-    required this.sltTslots,
-    required this.sltBslots,
-    required this.sltAslots,
-    required this.sltGdeid,
-    required this.sltStatus,
-  });
-
-  String sltId;
-  String sltTrekid;
-  DateTime sltTrekdate;
-  String sltShift;
-  String sltTslots;
-  String sltBslots;
-  String sltAslots;
-  String sltGdeid;
-  String sltStatus;
-
-  factory Slot.fromJson(Map<String, dynamic> json) => Slot(
-        sltId: json["slt_id"],
-        sltTrekid: json["slt_trekid"],
-        sltTrekdate: DateTime.parse(json["slt_trekdate"]),
-        sltShift: json["slt_shift"],
-        sltTslots: json["slt_tslots"],
-        sltBslots: json["slt_bslots"],
-        sltAslots: json["slt_aslots"],
-        sltGdeid: json["slt_gdeid"],
-        sltStatus: json["slt_status"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "slt_id": sltId,
-        "slt_trekid": sltTrekid,
-        "slt_trekdate":
-            "${sltTrekdate.year.toString().padLeft(4, '0')}-${sltTrekdate.month.toString().padLeft(2, '0')}-${sltTrekdate.day.toString().padLeft(2, '0')}",
-        "slt_shift": sltShift,
-        "slt_tslots": sltTslots,
-        "slt_bslots": sltBslots,
-        "slt_aslots": sltAslots,
-        "slt_gdeid": sltGdeid,
-        "slt_status": sltStatus,
-      };
-}
 
 class Trek {
   Trek({

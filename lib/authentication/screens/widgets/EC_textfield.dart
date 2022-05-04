@@ -33,7 +33,7 @@ class ECTExtField extends StatefulWidget {
 
   bool obscureText;
   TextInputType? keyboardType;
-
+  Color bgColor;
   ECTExtField(
       {Key? key,
       required this.controller,
@@ -48,6 +48,7 @@ class ECTExtField extends StatefulWidget {
       required this.onTap,
       required this.onfocus,
       required this.stream,
+      this.bgColor=Colors.white,
       required this.width})
       : super(key: key);
 
@@ -88,7 +89,7 @@ class _ECTExtFieldState extends State<ECTExtField> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Material(
-                  color: Colors.white,
+                  color: widget.bgColor,
                   borderRadius: BorderRadius.circular(8.0),
                   child: TextField(
                     controller: widget.controller,

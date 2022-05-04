@@ -6,8 +6,9 @@ class DateTile extends StatefulWidget {
   DateTime? date;
   TimeOfDay? time;
   void Function()? onTap;
+  Color color;
 
-  DateTile({Key? key, this.date, this.time, this.onTap, required this.title}) : super(key: key);
+  DateTile({Key? key,this.color = Colors.white, this.date, this.time, this.onTap, required this.title}) : super(key: key);
 
   @override
   _DateTileState createState() => _DateTileState();
@@ -40,9 +41,11 @@ class _DateTileState extends State<DateTile> {
                       ),
                     ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            widget.title == ''
+                ? Container()
+                : SizedBox(
+                    height: 10,
+                  ),
             InkWell(
               onTap: widget.onTap,
               child: Row(
@@ -52,7 +55,7 @@ class _DateTileState extends State<DateTile> {
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
+                      color: widget.color,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),

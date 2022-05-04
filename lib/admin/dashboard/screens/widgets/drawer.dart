@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:myecotrip/admin/reports/screens/natureGuidereport.dart';
 import 'package:myecotrip/admin/reports/screens/reports_screen.dart';
+import 'package:myecotrip/authentication/screens/auth_background.dart';
 import 'package:myecotrip/constants/config.dart';
 
 class DashDrawer extends StatefulWidget {
@@ -52,10 +53,20 @@ class _DashDrawerState extends State<DashDrawer> {
                   );
                 }),
             Divider(),
-            _createDrawerItem(icon: Icons.settings_rounded, text: 'Settings'),
-            _createDrawerItem(icon: Icons.logout, text: 'Logout'),
+            // _createDrawerItem(icon: Icons.settings_rounded, text: 'Settings'),
+            _createDrawerItem(
+                icon: Icons.logout,
+                text: 'Logout',
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AuthenticationScreen(),
+                    ),
+                  );
+                }),
             ListTile(
-              title: Text('0.0.2'),
+              title: Text('0.0.3'),
               onTap: () {},
             ),
           ],
@@ -68,14 +79,21 @@ class _DashDrawerState extends State<DashDrawer> {
     return DrawerHeader(
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage('path/to/header_background.png'))),
       child: Stack(children: <Widget>[
+        Positioned(
+            top: 12.0,
+            left: 16.0,
+            child: Container(
+              width: Config().deviceWidth(context) * 0.4,
+              height: Config().deviceHeight(context) * 0.1,
+              decoration: BoxDecoration(
+                  image:
+                      DecorationImage(fit: BoxFit.contain, image: AssetImage(IMAGES + 'logo.png'))),
+            )),
         const Positioned(
             bottom: 12.0,
             left: 16.0,
-            child: Text("Eco Tourism",
+            child: Text("Karnataka Eco Tourism",
                 style: TextStyle(
                     color: Color(0xff10461D), fontSize: 20.0, fontWeight: FontWeight.w500))),
       ]),
@@ -96,10 +114,8 @@ class _DashDrawerState extends State<DashDrawer> {
             padding: EdgeInsets.only(left: 8.0),
             child: Text(
               text,
-              style: TextStyle(color: Color(0xff10461D  ),
-              fontFamily: Nunito,
-              fontWeight:FontWeight.bold
-              ),
+              style: TextStyle(
+                  color: Color(0xff10461D), fontFamily: Nunito, fontWeight: FontWeight.bold),
             ),
           )
         ],

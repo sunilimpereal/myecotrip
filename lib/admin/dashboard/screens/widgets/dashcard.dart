@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:myecotrip/admin/dashboard/data/cardModel.dart';
 import 'package:myecotrip/constants/config.dart';
 import 'package:myecotrip/utils/svg_icon.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../../../utils/printer/printer.dart';
+import '../../../issue_ticket/screens/tickcet_form.dart';
 
 class GradientColors {
   Color color1;
@@ -14,21 +17,9 @@ class GradientColors {
 
 class DashCard extends StatefulWidget {
   GradientColors colors;
-  String name;
-  String location;
-  String slot;
-  String total;
-  String visitors;
+  CardDataModel cardDataModel;
 
-  DashCard({
-    Key? key,
-    required this.colors,
-    required this.location,
-    required this.name,
-    required this.slot,
-    required this.total,
-    required this.visitors,
-  }) : super(key: key);
+  DashCard({Key? key, required this.colors, required this.cardDataModel}) : super(key: key);
 
   @override
   State<DashCard> createState() => _DashCardState();
@@ -118,7 +109,7 @@ class _DashCardState extends State<DashCard> {
             child: Row(
               children: [
                 Text(
-                  widget.name,
+                  widget.cardDataModel.landScapeModel.trkName,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -138,7 +129,7 @@ class _DashCardState extends State<DashCard> {
                 size: 16,
               ),
               Text(
-                widget.location,
+                widget.cardDataModel.landScapeModel.trkLocation,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
@@ -164,26 +155,35 @@ class _DashCardState extends State<DashCard> {
         child: InkWell(
           splashColor: widget.colors.color2,
           onTap: () async {
-            Printer printer = Printer();
-            Map<String, dynamic> data = {
-              'bookingId': 'ECOTRIP67020220225015403',
-              'noOfTickets': 3,
-              'bookingDate': '2022-02-25',
-              'trekkingDate': '2022-02-26',
-              'timeSlot': '04:00 AM',
-              'total': 'Rs. 129.38',
-              'names': ['name1', 'name2', 'first  last'],
-              'age': ['23', '23', '24'],
-              'sex': ['female', 'male', 'male'],
-              'trailName': 'Skandagiri / Bangalore',
-              'startingPoint': 'Kalwara Village',
-              'endPoint': 'Skandagiri Hilltop',
-              'contactNo': '+91918722254201',
-              'qrcode': '918722254201',
-              'isExitTicket': false,
-            };
-            final result = await printer.printReceipt(data);
-            log(result.toString());
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => IssueTicketForm(
+                  cardDataModel: widget.cardDataModel,
+                ),
+              ),
+            );
+
+            // Printer printer = Printer();
+            // Map<String, dynamic> data = {
+            //   'bookingId': 'ECOTRIP67020220225015403',
+            //   'noOfTickets': 3,
+            //   'bookingDate': '2022-02-25',
+            //   'trekkingDate': '2022-02-26',
+            //   'timeSlot': '04:00 AM',
+            //   'total': 'Rs. 129.38',
+            //   'names': ['name1', 'name2', 'first  last'],
+            //   'age': ['23', '23', '24'],
+            //   'sex': ['female', 'male', 'male'],
+            //   'trailName': 'Skandagiri / Bangalore',
+            //   'startingPoint': 'Kalwara Village',
+            //   'endPoint': 'Skandagiri Hilltop',
+            //   'contactNo': '+91918722254201',
+            //   'qrcode': '918722254201',
+            //   'isExitTicket': false,
+            // };
+            // final result = await printer.printReceipt(data);
+            // log(result.toString());
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -211,7 +211,9 @@ class _DashCardState extends State<DashCard> {
           height: 30,
           child: SvgIcon(
             color: Colors.white,
-            path: widget.slot != "6:00 AM" ? 'sunrise1.svg' : 'sunrise2.svg',
+            path: widget.cardDataModel.slotDetail.slots[0].sltShift != "6:00 AM"
+                ? 'sunrise1.svg'
+                : 'sunrise2.svg',
           ),
         ),
         SizedBox(
@@ -220,7 +222,7 @@ class _DashCardState extends State<DashCard> {
         Column(
           children: [
             Text(
-              widget.slot,
+              widget.cardDataModel.slotDetail.slots[0].sltShift,
               style: TextStyle(
                 fontFamily: Montserrat,
                 fontWeight: FontWeight.bold,
@@ -247,14 +249,14 @@ class _DashCardState extends State<DashCard> {
           Container(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: const [
+              children: [
                 Text(
-                  "60 / ",
+                  "${widget.cardDataModel.slotDetail.slots[0].sltBslots} / ",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "100",
-                  style: TextStyle(
+                  widget.cardDataModel.slotDetail.slots[0].sltTslots,
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 )
@@ -306,6 +308,42 @@ class _DashCardState extends State<DashCard> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LoadingDashboardCard extends StatelessWidget {
+  GradientColors colors;
+  LoadingDashboardCard({
+    Key? key,
+    required this.colors,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      child: Shimmer(
+        duration: Duration(seconds: 2),
+        child: Container(
+          height: Config().deviceHeight(context) * 0.2,
+          width: Config().deviceWidth(context),
+          decoration: BoxDecoration(
+            // color: widget.color,
+            gradient: LinearGradient(
+                colors: [colors.color1.withOpacity(0.6), colors.color2.withOpacity(0.6)]),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Ink(
+            child: InkWell(
+              splashColor: Colors.green[50]!.withOpacity(0.5),
+              highlightColor: Colors.transparent,
+              onTap: () {},
+              child: Container(),
+            ),
+          ),
+        ),
       ),
     );
   }
